@@ -1,7 +1,7 @@
 <template>
   <div class="home h-full">
     <Container class="h-full">
-        <ChatWindow />
+        <ChatWindow class="p-5" />
     </Container>
     <Sidebar>
         <Conversations />
@@ -29,7 +29,6 @@ export default {
 
 <style>
     .home{
-        height: 100%;
         padding-left: 350px;
     }
 </style>

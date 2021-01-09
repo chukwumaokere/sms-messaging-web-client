@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar"><slot/></div>
+  <div class="sidebar bg-white dark:bg-black"><slot/></div>
 </template>
 
 <script>
@@ -18,7 +18,6 @@ export default {
         left: 0;
         bottom: 0;
         max-width: 350px;
-        background-color: red;
         display: flex;
         height: 100%;
         width: 100%;
