@@ -1,18 +1,35 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="home h-full">
+    <Container class="h-full">
+        <ChatWindow />
+    </Container>
+    <Sidebar>
+        <Conversations />
+    </Sidebar>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Conversations from '@/components/Conversations';
+import ChatWindow from '@/components/ChatWindow';
+import Sidebar from '@/components/Sidebar';
+import Container from '@/components/Container';
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld,
-    }
+    ChatWindow,
+    Conversations,
+    Container,
+    Sidebar
+  }
 }
 </script>
+
+<style>
+    .home{
+        height: 100%;
+        padding-left: 350px;
+    }
+</style>
