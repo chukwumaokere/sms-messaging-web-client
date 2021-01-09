@@ -1,9 +1,9 @@
 <template>
-  <div class="home h-full">
+  <div class="home h-full pl-96">
     <Container class="h-full">
-        <ChatWindow class="p-5" />
+        <ChatWindow class="p-10" />
     </Container>
-    <Sidebar>
+    <Sidebar class="p-10">
         <Conversations />
     </Sidebar>
   </div>
@@ -29,6 +29,6 @@ export default {
 
 <style>
     .home{
-        padding-left: 350px;
+        /* padding-left: 350px;*/
     }
 </style>

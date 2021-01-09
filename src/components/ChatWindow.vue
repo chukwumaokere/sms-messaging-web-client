@@ -1,5 +1,5 @@
 <template>
-  <div class="m">
+  <div class="m bg-white text-white dark:bg-gray-300 dark:text-black">
       isaojdaoisjd
   </div>
 </template>
@@ -13,9 +13,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .m{
-        background-color: grey;
         height: 100%;    
     }
 </style>
