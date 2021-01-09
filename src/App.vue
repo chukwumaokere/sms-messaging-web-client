@@ -7,6 +7,11 @@
 import HelloWorld from './components/HelloWorld.vue'
 
 export default {
+  watch: {
+    '$route' (to){
+      document.title = to.meta.title || "Messages App"
+    },
+  },
   name: 'App',
   components: {
     HelloWorld
