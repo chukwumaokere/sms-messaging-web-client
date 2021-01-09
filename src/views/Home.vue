@@ -1,9 +1,9 @@
 <template>
   <div class="home h-full pl-96">
     <Container class="h-full">
-        <ChatWindow class="p-10" />
+        <ChatWindow class="" />
     </Container>
-    <Sidebar class="p-10">
+    <Sidebar class="p-10 pt-5">
         <Conversations />
     </Sidebar>
   </div>
