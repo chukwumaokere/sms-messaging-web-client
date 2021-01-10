@@ -1,10 +1,10 @@
 <template>
 <a :href="href" @click="changeChat(conversation.conversationid, conversation.contact_name)" >
-    <span v-if="readstatus" class="flex h-3 w-3 z-50 absolute right-5 pt-5">
-            <!--<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>-->
-            <span class="animate-ping absolute inline-flex rounded-full h-3 w-3 bg-red-400"></span>
-            <span class="absolute inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-        </span>
+    <span class="flex h-3 w-3 z-50 absolute right-5 pt-5">
+        <!--<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>-->
+        <span  v-if="readstatus" class="animate-ping absolute inline-flex rounded-full h-3 w-3 bg-red-400"></span>
+        <span  v-if="readstatus" class="absolute inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+    </span>
   <article class="p-4 px-10 flex space-x-4" :class="{'activechat': isActive }" >
         
         <img :src="conversation.picture" class="flex-none w-12 h-12 rounded-lg object-cover" width="144" height="144" >
@@ -53,7 +53,8 @@ export default {
                 element.classList.remove('activechat');
             });
             this.isActive = true;
-            this.$el.firstElementChild.classList.add('activechat')
+            this.$el.children[1].classList.add('activechat')
+            //console.log(this.$el.children[1]);
             this.$emit("change-window", convoid, contact_name);
         }
     }
