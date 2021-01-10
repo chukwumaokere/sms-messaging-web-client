@@ -1,7 +1,7 @@
 <template>
   <div class="home h-full pl-96">
     <Container class="h-full">
-        <ChatWindow :currentConvo="currentConvo" />
+        <ChatWindow :currentConvo="currentConvo" :contactName="contact_name" />
     </Container>
     <Sidebar class="pt-5">
         <Conversations @change-window="changeWindow" :conversations="conversations" />
@@ -69,15 +69,18 @@ export default {
         },
     ];
     let currentConvo = ref(0);
+    let contact_name = ref('No contact...');
     return{
         conversations,
         currentConvo,
+        contact_name,
     }
   },
   methods:{ 
-      changeWindow(b){
-          this.currentConvo = b;
-          console.log('whoa b', b);
+      changeWindow(h, c){
+          this.currentConvo = h;
+          this.contact_name = c;
+          console.log('whoa h', h, c);
       },
   }
 }
