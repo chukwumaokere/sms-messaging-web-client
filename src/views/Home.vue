@@ -31,7 +31,7 @@ export default {
             conversationid: 1,
             /*last_message_sent: '2021-01-09 08:20:33', */
             last_message_sent: "2 min",
-            last_message: "Thank you!",
+            last_message: "Thank you! 🙏",
             direction: "Inbound",
             status: 1,
             contact_name: "Sheryl Waters",
@@ -51,7 +51,7 @@ export default {
             conversationid: 3,
             /*last_message_sent: '2021-01-01 08:20:33',*/
             last_message_sent: 'Wed',
-            last_message: "No problem!",
+            last_message: "No problem! 😀",
             direction: "Outbound",
             status: 0,
             contact_name: "Don Corleone",
