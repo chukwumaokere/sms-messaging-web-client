@@ -1,7 +1,13 @@
 <template>
 <a :href="href" @click="changeChat(conversation.conversationid, conversation.contact_name)" >
-  <article class="p-4 px-10 flex space-x-4" :class="{active: isActive}">
-        <img :src="conversation.picture" class="flex-none w-12 h-12 rounded-lg object-cover" width="144" height="144">
+    <span v-if="readstatus" class="flex h-3 w-3 z-50 absolute right-5 pt-5">
+            <!--<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>-->
+            <span class="animate-ping absolute inline-flex rounded-full h-3 w-3 bg-red-400"></span>
+            <span class="absolute inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+        </span>
+  <article class="p-4 px-10 flex space-x-4" :class="{'activechat': isActive }" >
+        
+        <img :src="conversation.picture" class="flex-none w-12 h-12 rounded-lg object-cover" width="144" height="144" >
         <div class="min-w-0 relative flex-auto sm:pr-20 lg:pr-0 xl:pr-20">
             <h2 class="text-md font-semibold text-black dark:text-white mb-0.5">
                 {{ conversation.contact_name }}
@@ -22,6 +28,7 @@
 
 <script>
 import Router from '@/router';
+import { ref } from 'vue';
 export default {
     props: {
         conversation: Object,
@@ -29,10 +36,10 @@ export default {
         href: String,
     },
     setup(props){
-        let isActive = false;
+        let isActive = ref(false);
         let params = Router.currentRoute.value.params;
         if (params.conversationid == props.conversation.conversationid){
-            isActive = true;
+            isActive.value = true;
         }
         return {
             isActive
@@ -40,7 +47,13 @@ export default {
     },
     methods: {
         changeChat(convoid, contact_name){
-            console.log('switching window to:', convoid, contact_name);
+            console.log('switching window to:', convoid, contact_name); 
+            let elements = document.getElementsByClassName('activechat');
+            elements.forEach(element => {
+                element.classList.remove('activechat');
+            });
+            this.isActive = true;
+            this.$el.firstElementChild.classList.add('activechat')
             this.$emit("change-window", convoid, contact_name);
         }
     }
@@ -48,7 +61,7 @@ export default {
 </script>
 
 <style scoped>
-    .active{
+    .activechat{
         background-color:#f1f1f1;
     }
 </style>

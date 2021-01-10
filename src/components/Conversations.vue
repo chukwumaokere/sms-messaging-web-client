@@ -1,6 +1,6 @@
 <template>
   <ul class="divide-y divide-gray-100">
-    <ConvoTile @change-window="changeWindow" :href="'./#/conversations/' + conversation.conversationid" v-for="conversation in conversations" :key="conversation.conversationid" :conversation="conversation" :readstatus="conversation.status"/>
+    <ConvoTile @change-window="changeWindow" :href="'./#/conversations/' + conversation.conversationid" v-for="conversation in conversations" :key="conversation.conversationid" :conversation="conversation" :readstatus="conversation.unread"/>
   </ul>
 </template>
 

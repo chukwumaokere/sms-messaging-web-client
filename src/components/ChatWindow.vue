@@ -31,7 +31,7 @@
   </div>
   <div v-else class="m bg-gray-300 text-black dark:bg-gray-300 dark:text-black w-full relative" >
       <div class="select-a-convo p-10 flex justify-center h-full">
-        <h1 class="place-self-center text-2xl">👈 Select a conversation from the left menu to get started!</h1>
+        <h1 class="animate-bounce place-self-center text-2xl">👈 Select a conversation from the left menu to get started!</h1>
       </div>
   </div>
 </template>
