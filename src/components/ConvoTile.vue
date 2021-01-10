@@ -5,7 +5,7 @@
         <span  v-if="readstatus" class="animate-ping absolute inline-flex rounded-full h-3 w-3 bg-red-400"></span>
         <span  v-if="readstatus" class="absolute inline-flex rounded-full h-3 w-3 bg-red-500"></span>
     </span>
-  <article class="p-4 px-10 flex space-x-4" :class="{'activechat': isActive }" >
+  <article class="p-4 px-10 flex space-x-4" :class="{'bg-gray-100': isActive }" >
         
         <img :src="conversation.picture" class="flex-none w-12 h-12 rounded-lg object-cover" width="144" height="144" >
         <div class="min-w-0 relative flex-auto sm:pr-20 lg:pr-0 xl:pr-20">
@@ -48,12 +48,12 @@ export default {
     methods: {
         changeChat(convoid, contact_name){
             console.log('switching window to:', convoid, contact_name); 
-            let elements = document.getElementsByClassName('activechat');
+            let elements = document.getElementsByClassName('bg-gray-100');
             elements.forEach(element => {
-                element.classList.remove('activechat');
+                element.classList.remove('bg-gray-100');
             });
             this.isActive = true;
-            this.$el.children[1].classList.add('activechat')
+            this.$el.children[1].classList.add('bg-gray-100')
             //console.log(this.$el.children[1]);
             this.$emit("change-window", convoid, contact_name);
         }
