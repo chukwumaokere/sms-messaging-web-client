@@ -1,6 +1,6 @@
 <template>
-<a :href="href" @click="changeChat(conversation.conversationid, conversation.contact_name)">
-  <article class="p-4 px-10 flex space-x-4">
+<a :href="href" @click="changeChat(conversation.conversationid, conversation.contact_name)" >
+  <article class="p-4 px-10 flex space-x-4" :class="{active: isActive}">
         <img :src="conversation.picture" class="flex-none w-12 h-12 rounded-lg object-cover" width="144" height="144">
         <div class="min-w-0 relative flex-auto sm:pr-20 lg:pr-0 xl:pr-20">
             <h2 class="text-md font-semibold text-black dark:text-white mb-0.5">
@@ -21,15 +21,26 @@
 </template>
 
 <script>
+import Router from '@/router';
 export default {
     props: {
         conversation: Object,
         readstatus: Boolean,
         href: String,
     },
+    setup(props){
+        let isActive = false;
+        let params = Router.currentRoute.value.params;
+        if (params.conversationid == props.conversation.conversationid){
+            isActive = true;
+        }
+        return {
+            isActive
+        }
+    },
     methods: {
         changeChat(convoid, contact_name){
-            console.log('switching window to: ', convoid, contact_name);
+            console.log('switching window to:', convoid, contact_name);
             this.$emit("change-window", convoid, contact_name);
         }
     }
@@ -37,5 +48,7 @@ export default {
 </script>
 
 <style scoped>
-
+    .active{
+        background-color:#f1f1f1;
+    }
 </style>

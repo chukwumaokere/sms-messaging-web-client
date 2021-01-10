@@ -72,7 +72,7 @@ export default {
     let currentConvo = 0;
     let contact_name = ref('Select a contact...');
     let params = Router.currentRoute.value.params;
-    currentConvo = params.conversationid ? params.conversationid : ref(0);
+    currentConvo = params.conversationid ? params.conversationid : 0;
     if (currentConvo !== 0 ){
         let obj = conversations.find(conv => conv.conversationid == currentConvo );
         //console.log(obj);
@@ -95,7 +95,5 @@ export default {
 </script>
 
 <style>
-    .home{
-        /* padding-left: 350px;*/
-    }
+
 </style>

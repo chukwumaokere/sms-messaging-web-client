@@ -19,7 +19,7 @@
       </div>
       <div class="input-section px-10 w-full bottom-0 absolute mb-10" style="width: inherit">
         <div class="w-full flex flex-wrap items-stretch relative space-x-8">
-            <input type="text" placeholder="Chat message" class="flex-shrink flex-grow flex-auto px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow-lg outline-none focus:outline-none focus:shadow-outline"/>
+            <input type="text" placeholder="Chat message" class="flex-shrink flex-grow flex-auto px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none transition ease-in duration-200 focus:outline-none focus:shadow-outline focus:shadow-lg active:shaodw-lg"/>
             <button
                     class="p-0 w-12 h-12 bg-red-600 rounded-full hover:bg-red-700 active:shadow-lg mouse shadow-lg transition ease-in duration-200 focus:outline-none text-white">
                 <svg class="w-6 h-6 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
