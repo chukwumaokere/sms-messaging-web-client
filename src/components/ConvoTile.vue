@@ -1,5 +1,5 @@
 <template>
-<a :href="href">
+<a :href="href" @click="changeChat(conversation.conversationid)">
   <article class="p-4 px-10 flex space-x-4">
         <img :src="conversation.picture" class="flex-none w-12 h-12 rounded-lg object-cover" width="144" height="144">
         <div class="min-w-0 relative flex-auto sm:pr-20 lg:pr-0 xl:pr-20">
@@ -26,6 +26,12 @@ export default {
         conversation: Object,
         readstatus: Boolean,
         href: String,
+    },
+    methods: {
+        changeChat(convoid){
+            console.log('switching window to: ', convoid);
+            this.$emit("change-window", convoid);
+        }
     }
 }
 </script>

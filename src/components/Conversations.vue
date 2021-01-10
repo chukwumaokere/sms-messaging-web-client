@@ -1,6 +1,6 @@
 <template>
   <ul class="divide-y divide-gray-100">
-    <ConvoTile :href="'./#/conversations/' + conversation.conversationid" v-for="conversation in conversations" :key="conversation.conversationid" :conversation="conversation" :readstatus="conversation.status"/>
+    <ConvoTile @change-window="changeWindow" :href="'./#/conversations/' + conversation.conversationid" v-for="conversation in conversations" :key="conversation.conversationid" :conversation="conversation" :readstatus="conversation.status"/>
   </ul>
 </template>
 
@@ -12,6 +12,12 @@ export default {
  },
  components:{
      ConvoTile,
+ },
+ methods:{
+     changeWindow(v){
+        this.$emit("change-window", v);
+        console.log('whoa v', v);
+      },
  }
 }
 </script>

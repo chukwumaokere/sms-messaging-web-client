@@ -1,10 +1,10 @@
 <template>
   <div class="home h-full pl-96">
     <Container class="h-full">
-        <ChatWindow class="" />
+        <ChatWindow :currentConvo="currentConvo" />
     </Container>
     <Sidebar class="pt-5">
-        <Conversations :conversations="conversations" />
+        <Conversations @change-window="changeWindow" :conversations="conversations" />
     </Sidebar>
   </div>
 </template>
@@ -15,7 +15,7 @@ import Conversations from '@/components/Conversations';
 import ChatWindow from '@/components/ChatWindow';
 import Sidebar from '@/components/Sidebar';
 import Container from '@/components/Container';
-
+import { ref } from 'vue';
 
 export default {
   name: 'Home',
@@ -68,9 +68,17 @@ export default {
             picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
         },
     ];
+    let currentConvo = ref(0);
     return{
-        conversations
+        conversations,
+        currentConvo,
     }
+  },
+  methods:{ 
+      changeWindow(b){
+          this.currentConvo = b;
+          console.log('whoa b', b);
+      },
   }
 }
 </script>
