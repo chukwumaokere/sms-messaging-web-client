@@ -1,5 +1,5 @@
 <template>
-  <div class="m bg-gray-300 text-black dark:bg-gray-300 dark:text-black w-full relative">
+  <div v-if="convo" class="m bg-gray-300 text-black dark:bg-gray-300 dark:text-black w-full relative">
       <div class="contact-name-bar bg-blue-500 p-5 px-10 shadow-lg" style="width: inherit">
           <div class="contact-name text-xl text-white">
             <div class="flex">
@@ -29,14 +29,29 @@
         </div>
       </div>
   </div>
+  <div v-else class="m bg-gray-300 text-black dark:bg-gray-300 dark:text-black w-full relative" >
+      <div class="select-a-convo p-10 flex justify-center h-full">
+        <h1 class="place-self-center text-2xl">👈 Select a conversation from the left menu to get started!</h1>
+      </div>
+  </div>
 </template>
 
 <script>
+import Router from "@/router";
 export default {
     name: 'ChatWindow',
     props: {
 
     },
+    setup(){
+        let params = Router.currentRoute.value.params;
+        //console.log("Params are: ", params);
+        let convo = params.conversationid ? params.conversationid : false;
+        return{
+            params,
+            convo
+        }
+    }
 }
 </script>
 

@@ -1,4 +1,5 @@
 <template>
+<a :href="href">
   <article class="p-4 px-10 flex space-x-4">
         <img :src="conversation.picture" class="flex-none w-12 h-12 rounded-lg object-cover" width="144" height="144">
         <div class="min-w-0 relative flex-auto sm:pr-20 lg:pr-0 xl:pr-20">
@@ -16,6 +17,7 @@
             </dl>
         </div>
     </article>
+</a>
 </template>
 
 <script>
@@ -23,6 +25,7 @@ export default {
     props: {
         conversation: Object,
         readstatus: Boolean,
+        href: String,
     }
 }
 </script>
