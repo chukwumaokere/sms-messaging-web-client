@@ -16,6 +16,7 @@ import ChatWindow from '@/components/ChatWindow';
 import Sidebar from '@/components/Sidebar';
 import Container from '@/components/Container';
 import { ref } from 'vue';
+import Router from "@/router";
 
 export default {
   name: 'Home',
@@ -68,8 +69,15 @@ export default {
             picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
         },
     ];
-    let currentConvo = ref(0);
-    let contact_name = ref('No contact...');
+    let currentConvo = 0;
+    let contact_name = ref('Select a contact...');
+    let params = Router.currentRoute.value.params;
+    currentConvo = params.conversationid ? params.conversationid : ref(0);
+    if (currentConvo !== 0 ){
+        let obj = conversations.find(conv => conv.conversationid == currentConvo );
+        //console.log(obj);
+        contact_name.value = obj.contact_name;
+    }        
     return{
         conversations,
         currentConvo,
@@ -80,7 +88,7 @@ export default {
       changeWindow(h, c){
           this.currentConvo = h;
           this.contact_name = c;
-          console.log('whoa h', h, c);
+          //console.log('whoa h', h, c);
       },
   }
 }

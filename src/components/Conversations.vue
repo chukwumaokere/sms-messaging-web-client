@@ -16,7 +16,7 @@ export default {
  methods:{
      changeWindow(v, c){
         this.$emit("change-window", v, c);
-        console.log('whoa v', v, c);
+        //console.log('whoa v', v, c);
       },
  }
 }
