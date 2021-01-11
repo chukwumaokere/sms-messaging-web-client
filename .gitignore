@@ -6,7 +6,7 @@ node_modules
 # local env files
 .env.local
 .env.*.local
-/src/lib/Credentials.js
+src/lib/Credentials.js
 
 # Log files
 npm-debug.log*
