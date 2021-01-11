@@ -1,3 +1,4 @@
+import twilioInfo from './Credentials';
 export default {
     async loadConversationData(conversationid){
         console.log('request received for', conversationid);
@@ -16,7 +17,12 @@ export default {
         }
     },
     async authWithTwilio(){
-
+        let accountSid = twilioInfo.accountSid;
+        let authToken = twilioInfo.authToken;
+        return{
+            accountSid,
+            authToken,
+        }
     },
     async VTLogin(info){
         return info
