@@ -50,7 +50,7 @@
     </div>
     <div class="conversations overflow-y-auto h-full scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
         <ul class="divide-y divide-gray-100 h-full">
-            <Conversations :conversations="conversations" @change-window="changeWindow"/>
+            <Conversations :conversations="conversations" @change-window="changeWindow" :type="currentView" />
         </ul>
     </div>
 
@@ -123,6 +123,7 @@ export default {
     changeConversations(type){
         console.log('switching to', type);
         this.currentView = type;
+        this.$emit('change-conversation-type', type);
     },
     toggleDarkMode(){
         this.$emit('toggle-dark-mode');

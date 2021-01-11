@@ -3,7 +3,7 @@
     <Container class="h-full">
         <ChatWindow :currentConvo="currentConvo" :contactName="contact_name" />
     </Container>
-    <Sidebar class="pt-5" :unreadCount="unreadcount" :conversations="conversations" @change-window="changeWindow" @toggle-dark-mode="toggleDarkMode">
+    <Sidebar class="pt-5" :unreadCount="unreadcount" :conversations="conversations" @change-window="changeWindow" @change-conversation-type="changeConversations" @toggle-dark-mode="toggleDarkMode">
         <!-- <Conversations @change-window="changeWindow" :conversations="conversations" />-->
     </Sidebar>
   </div>
@@ -27,7 +27,7 @@ export default {
     Sidebar
   }, 
   setup(){
-    let conversations = [
+    let conversations = ref([
         {
             conversationid: 1,
             /*last_message_sent: '2021-01-09 08:20:33', */
@@ -178,18 +178,19 @@ export default {
             contact_name: "David O'Doherty",
             picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
         },
-    ];
+    ]);
+    let initConversations = conversations.value;
     let unreadcount = 0;
     let currentConvo = 0;
     let contact_name = ref('Select a contact...');
     let params = Router.currentRoute.value.params;
     currentConvo = params.conversationid ? params.conversationid : 0;
     if (currentConvo !== 0 ){
-        let obj = conversations.find(conv => conv.conversationid == currentConvo );
+        let obj = conversations.value.find(conv => conv.conversationid == currentConvo );
         //console.log(obj);
         contact_name.value = obj.contact_name;
     } 
-    conversations.forEach(conversation => {
+    conversations.value.forEach(conversation => {
         if(conversation.unread === true){
             unreadcount++;
         }
@@ -208,13 +209,40 @@ export default {
         conversations,
         currentConvo,
         contact_name,
-        unreadcount
+        unreadcount,
+        initConversations,
     }
   },
-  created(){
-
-  },
   methods:{ 
+      changeConversations(type){
+          console.log('changing list of conversations to', type);
+          if (type == 'All'){
+              console.log('init', this.initConversations);
+              this.conversations = this.initConversations;
+          }
+          if (type == "Unread"){
+              console.log('initconvos:', this.initConversations)
+              
+              this.conversations = [];
+              this.initConversations.forEach(conversation => {
+                  if (conversation.unread === true){
+                      this.conversations.push(conversation);
+                  }
+              })
+              //console.log(this.conversations);
+          }
+          if (type == "Starred"){
+              console.log('initconvos:', this.initConversations)
+              
+              this.conversations = [];
+              this.initConversations.forEach(conversation => {
+                  if (conversation.starred === true){
+                      this.conversations.push(conversation);
+                  }
+              })
+              //console.log(this.conversations);
+          }
+      },
       changeWindow(h, c){
           this.currentConvo = h;
           this.contact_name = c;
