@@ -1,6 +1,2 @@
 const twilioInfo = { accountSid: '', authToken: '' }
-export default {
-    
-        twilioInfo
-    
-}
+export default twilioInfo
