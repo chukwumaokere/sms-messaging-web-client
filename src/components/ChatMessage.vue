@@ -2,7 +2,8 @@
   <div>
      <div v-if="message.direction == 'Inbound'" class="col-start-1 col-end-8 p-3 rounded-lg">
         <div class="flex flex-row items-center">
-            <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" class="w-10 h-10 rounded-full ">
+            <!-- <img src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144" alt="My profile" class="w-10 h-10 rounded-full ">-->
+            <img src="https://kexp.org/media/filer_public_thumbnails/filer_public/06/84/06842e4e-ffce-41de-aa9c-7aeb2a886466/cheryl_3.jpg__800x800_q85_crop_subsampling-2_upscale.jpg" alt="My profile" class="w-10 h-10 rounded-full ">
         <div class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
             <div v-if="message.hasimage && !message.isimage">{{message.message}}
                     <img :src="message.imgsrc" class="max-w-xs cursor-pointer" />
