@@ -142,7 +142,7 @@ export default {
             },
             {
                 id: 100,
-                message: "Thank you! 🙏",
+                message: "Thank you! 🙏 I really appreciate it a lot!",
                 direction: 'Inbound',
                 unread: true,
                 timestamp: '2020-01-10 07:21:44',

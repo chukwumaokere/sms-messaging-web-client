@@ -1,17 +1,17 @@
 <template>
 <a :href="href" @click="changeChat(conversation.conversationid, conversation.contact_name)" >
     
-  <article class="p-4 px-10 flex space-x-4 transition ease-in hover:bg-gray-100" :class="{'bg-gray-200': isActive }" >
+  <article class="p-4 px-10 flex space-x-4 transition ease-in hover:bg-gray-100" :class="{'bg-gray-200': isActive }" style="width: inherit;">
         
         <img :src="conversation.picture" class="flex-none w-12 h-12 rounded-lg object-cover" width="144" height="144" >
-        <div class="min-w-0 relative flex-auto sm:pr-20 lg:pr-0 xl:pr-20">
+        <div class="min-w-0 relative flex-auto sm:pr-10 lg:pr-0 xl:pr-10">
             <h2 class="text-md font-semibold text-black dark:text-white mb-0.5">
                 {{ conversation.contact_name }}
             </h2>
-            <dl class="flex flex-wrap text-sm font-normal whitespace-pre">
-                <div>
+            <dl class="flex flex-wrap text-sm font-normal whitespace-nowrap w-full">
+                <div class="" style="width: inherit;">
                     <dt class="sr-only">Last Message</dt>
-                    <dd> {{ conversation.last_message }}</dd>
+                    <dd class="overflow-ellipsis truncate"> {{ conversation.last_message }}</dd>
                 </div>
                 <div class="absolute top-0 right-0 rounded-full bg-amber-50 text-black px-2 py-0.5 hidden sm:flex lg:hidden xl:flex items-center space-x-1 dark:text-white">
                     <dd>{{ conversation.last_message_sent }}</dd>
@@ -54,7 +54,7 @@ export default {
                 element.classList.remove('bg-gray-200');
             });
             this.isActive = true;
-            this.$el.children[1].classList.add('bg-gray-200')
+            this.$el.children[0].classList.add('bg-gray-200')
             //console.log(this.$el.children[1]);
             this.$emit("change-window", convoid, contact_name);
         }
