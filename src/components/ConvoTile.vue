@@ -1,10 +1,6 @@
 <template>
 <a :href="href" @click="changeChat(conversation.conversationid, conversation.contact_name)" >
-    <span class="flex h-3 w-3 z-50 absolute right-5 pt-5">
-        <!--<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>-->
-        <span  v-if="readstatus" class="animate-ping absolute inline-flex rounded-full h-3 w-3 bg-red-400"></span>
-        <span  v-if="readstatus" class="absolute inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-    </span>
+    
   <article class="p-4 px-10 flex space-x-4 transition ease-in hover:bg-gray-100" :class="{'bg-gray-200': isActive }" >
         
         <img :src="conversation.picture" class="flex-none w-12 h-12 rounded-lg object-cover" width="144" height="144" >
@@ -21,6 +17,11 @@
                     <dd>{{ conversation.last_message_sent }}</dd>
                 </div>
             </dl>
+        </div>
+        <div class="z-50 relative right-0 top-5 m-0 ping">
+            <!--<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>-->
+            <span  v-if="readstatus" class="animate-ping absolute inline-flex rounded-full h-3 w-3 bg-red-400"></span>
+            <span  v-if="readstatus" class="absolute inline-flex rounded-full h-3 w-3 bg-red-500"></span>
         </div>
     </article>
 </a>
@@ -64,5 +65,9 @@ export default {
 <style scoped>
     .activechat{
         background-color:#f1f1f1;
+    }
+    .ping{
+        margin-right: 0 !important;
+        margin-left: 0 !important;
     }
 </style>

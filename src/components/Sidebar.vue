@@ -10,7 +10,7 @@
             </button>
         </div>
     </div>
-    <div class="new-conversation-section pb-5 flex px-10">
+    <div class="new-conversation-section pb-2 pt-2 flex px-10">
         <button class="text-white px-4 w-full h-12 bg-red-600 rounded-full ripple hover:bg-red-700 active:shadow mouse shadow-lg transition ease-in duration-200 focus:outline-none">
           <svg class="w-6 h-6 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -50,7 +50,7 @@
     <div class="flex options w-full mx-auto px-10 absolute bottom-0 pb-5 p-5" id="options">
         <ul class="flex space-x-4 mx-auto">
             <li>
-                <button @click="toggleDarkMode" class="flex items-center justify-center hover:text-indigo-100 text-indigo-500 h-10 w-10">
+                <button @click="toggleDarkMode" class="flex items-center justify-center hover:text-indigo-100 text-indigo-500 h-10 w-10 transition ease-in">
                 <svg class="w-6 h-6"
                     fill="none"
                     stroke="currentColor"
@@ -66,7 +66,7 @@
             <li>
                 <button 
                     class="flex items-center">
-                    <span class="flex items-center justify-center hover:text-indigo-100 text-indigo-500 h-10 w-10 rounded-2xl">
+                    <span class="flex items-center justify-center hover:text-indigo-100 text-indigo-500 h-10 w-10 rounded-2xl transition ease-in">
                         <svg class="w-6 h-6"
                             fill="none"
                             stroke="currentColor"
