@@ -150,6 +150,37 @@ export default {
                 isimage: false,
                 imgsrc: "",
             },
+            {
+                id: 110,
+                message: "Did I forget anything else??",
+                direction: 'Inbound',
+                unread: false,
+                timestamp: '2020-01-10 07:18:44',
+                hasimage: false,
+                isimage: false,
+                imgsrc: "",
+            },
+            {
+                id: 120,
+                message: "Nope we have everything we need, just waiting to hear from your insurance!",
+                direction: 'Outbound',
+                unread: false,
+                timestamp: '2020-01-10 07:19:44',
+                hasimage: false,
+                isimage: false,
+                imgsrc: "",
+            },
+            {
+                id: 130,
+                message: "Thank you again! Just let me know!",
+                direction: 'Inbound',
+                unread: true,
+                timestamp: '2020-01-10 07:21:44',
+                hasimage: false,
+                isimage: false,
+                imgsrc: "",
+            },
+
         ];
         
         return{

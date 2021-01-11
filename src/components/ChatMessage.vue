@@ -10,7 +10,7 @@
             </div>
             <div v-if="message.isimage"><img :src="message.imgsrc" class="max-w-xs cursor-pointer" /></div>
             <div v-if="!message.hasimage && !message.isimage">{{message.message}}</div>
-            <div class="absolute text-xs bottom-0 right-0 -mb-5 mr-2 text-gray-500 w-max dark:text-gray-200">
+            <div class="absolute text-xs bottom-0 left-0 -mb-5 mr-2 text-gray-500 w-max dark:text-gray-200">
                 {{message.timestamp}}
             </div>
         </div>
