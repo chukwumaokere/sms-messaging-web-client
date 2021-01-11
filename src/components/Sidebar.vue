@@ -1,9 +1,9 @@
 <template>
-  <div class="sidebar h-full w-96 bg-white text-black dark:bg-gray-700 dark:text-white shadow-xl ">
+  <div class="sidebar pb-20 flex flex-col max-h-full h-full w-96 bg-white text-black dark:bg-gray-700 dark:text-white shadow-xl">
     <div class="messages-bar flex pb-5 px-10">
         <div class="flex flex-row items-center"><p class="text-xl font-semibold">Messages</p> &nbsp; <div class="flex items-center justify-center ml-2 text-xs h-5 w-5 text-white bg-red-500 rounded-full font-medium">{{unreadCount}}</div></div>
         <div class="w-6 float-right absolute right-8 ">
-            <button class="p-0 w-7 h-7 bg-transparent ripple rounded-lg object-cover hover:bg-transparent hover:shadow active:shadow-lg mouse transition ease-in duration-200 focus:outline-none">
+            <button class="p-0 w-7 h-7 bg-transparent ripple rounded-lg object-cover mouse transition ease-in duration-200 focus:outline-none text-gray-400 hover:text-gray-700">
                 <svg class="w-6 h-6 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                 </svg>
@@ -18,7 +18,7 @@
           <span>New Conversation</span>
         </button>
     </div>
-    <div class="mt-5 mb-5 px-10 ">
+    <div class="pt-5 pb-5 px-10 ">
           <ul class="flex flex-row items-center justify-between">
             <li>
               <article @click="changeConversations('All')"
@@ -40,12 +40,53 @@
               </article>
             </li>
           </ul>
-        </div>
-    <div class="conversations">
-        <ul class="divide-y divide-gray-100">
+    </div>
+    <div class="conversations overflow-y-auto h-full scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+        <ul class="divide-y divide-gray-100 h-full">
             <Conversations :conversations="conversations" @change-window="changeWindow"/>
         </ul>
     </div>
+
+    <div class="flex options w-full mx-auto px-10 absolute bottom-0 pb-5 p-5" id="options">
+        <ul class="flex space-x-4 mx-auto">
+            <li>
+                <button @click="toggleDarkMode" class="flex items-center justify-center hover:text-indigo-100 text-indigo-500 h-10 w-10">
+                <svg class="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                </svg>
+                </button>
+            </li>
+            <li>
+                <button 
+                    class="flex items-center">
+                    <span class="flex items-center justify-center hover:text-indigo-100 text-indigo-500 h-10 w-10 rounded-2xl">
+                        <svg class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </span>
+                </button>
+          </li>
+        </ul>
+    </div>
+
   </div>
 </template>
 
@@ -67,6 +108,9 @@ export default {
     changeConversations(type){
         console.log('switching to', type);
     },
+    toggleDarkMode(){
+        this.$emit('toggle-dark-mode');
+    }
  }
 }
 </script>
@@ -81,5 +125,25 @@ export default {
         /* display: flex; */
         height: 100%;
         /* width: 100%;*/
+    }
+        .scrollbar-w-2::-webkit-scrollbar {
+        width: 0.55rem;
+        height: 0.55rem;
+    }
+
+    .scrollbar-track-blue-lighter::-webkit-scrollbar-track {
+        --bg-opacity: .10;
+        /*background-color: #ffe2ce;*/
+        background-color: rgba(59, 130, 246, var(--bg-opacity));
+    }
+
+    .scrollbar-thumb-blue::-webkit-scrollbar-thumb {
+        --bg-opacity: .5;
+        /*background-color: #ff8c80;*/
+        background-color: rgba(59, 130, 246, var(--bg-opacity));
+    }
+
+    .scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
+        border-radius: 0.55rem;
     }
 </style>

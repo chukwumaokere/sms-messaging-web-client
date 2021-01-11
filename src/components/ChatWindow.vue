@@ -1,11 +1,11 @@
 <template>
-  <div v-if="currentConvo > 0" class="m bg-gray-300 text-black dark:bg-gray-300 dark:text-black w-full relative">
+  <div v-if="currentConvo > 0" class="m flex flex-col pb-24 bg-gray-300 text-black dark:bg-gray-300 dark:text-black w-full relative">
       <div class="contact-name-bar bg-blue-500 p-5 px-10 shadow-lg" style="width: inherit">
           <div class="contact-name text-xl text-white">
             <div class="flex">
                 <p :id="currentConvo">{{contactName}} </p>
                 <div class="w-6 float-right absolute right-8 ">
-                    <button class="p-0 w-7 h-7 bg-transparent rounded-lg object-cover hover:bg-transparent hover:shadow active:shadow-lg mouse transition ease-in duration-200 focus:outline-none">
+                    <button class="p-0 w-7 h-7 bg-transparent rounded-lg object-cover mouse transition ease-in duration-200 focus:outline-none text-white text-opacity-50 hover:text-opacity-100">
                         <svg class="w-6 h-6 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
                         </svg>
@@ -14,10 +14,10 @@
             </div>
           </div>          
       </div>
-      <div class="px-10 pt-5 chat-area">
+      <div id="messages" class="px-10 pt-5 chat-area pb-15 overflow-y-auto max-h-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
           <ChatMessage v-for="message in fullConversation" :key="message.id" :message="message" />
       </div>
-      <div class="input-section px-10 pr-16 w-full bottom-0 absolute mb-10 flex " style="width: inherit">
+      <div class="input-section px-10 pr-16 w-full bottom-0 absolute pb-10 flex " style="width: inherit">
           <!-- Added:  'flex space-x-8' above -->
           <div class="relative w-full">
                 <input
@@ -98,6 +98,7 @@ export default {
                 timestamp: '2020-01-10 07:00:44',
                 hasimage: false,
                 isimage: false,
+                imgsrc: "",
             },
             {
                 id: 60,
@@ -107,6 +108,7 @@ export default {
                 timestamp: '2020-01-10 07:10:44',
                 hasimage: true,
                 isimage: true,
+                imgsrc: "https://www.ocregister.com/wp-content/uploads/2018/10/0418_nws_idb-l-allen-col-0418-1.jpg",
             },
             {
                 id: 70,
@@ -116,6 +118,7 @@ export default {
                 timestamp: '2020-01-10 07:11:22',
                 hasimage: false,
                 isimage: false,
+                imgsrc: "",
             },
             {
                 id: 80,
@@ -125,6 +128,7 @@ export default {
                 timestamp: '2020-01-10 07:18:44',
                 hasimage: false,
                 isimage: false,
+                imgsrc: "",
             },
             {
                 id: 90,
@@ -134,6 +138,7 @@ export default {
                 timestamp: '2020-01-10 07:19:44',
                 hasimage: true,
                 isimage: false,
+                imgsrc: "https://www.julienslive.com/images/lot/1962/196202_0.jpg",
             },
             {
                 id: 100,
@@ -143,6 +148,7 @@ export default {
                 timestamp: '2020-01-10 07:21:44',
                 hasimage: false,
                 isimage: false,
+                imgsrc: "",
             },
         ];
         
@@ -167,6 +173,26 @@ export default {
 <style scoped>
     .m{
         height: 100%;    
+    }
+    .scrollbar-w-2::-webkit-scrollbar {
+        width: 0.55rem;
+        height: 0.55rem;
+    }
+
+    .scrollbar-track-blue-lighter::-webkit-scrollbar-track {
+        --bg-opacity: .10;
+        /*background-color: #ffe2ce;*/
+        background-color: rgba(59, 130, 246, var(--bg-opacity));
+    }
+
+    .scrollbar-thumb-blue::-webkit-scrollbar-thumb {
+        --bg-opacity: .5;
+        /*background-color: #ff8c80;*/
+        background-color: rgba(59, 130, 246, var(--bg-opacity));
+    }
+
+    .scrollbar-thumb-rounded::-webkit-scrollbar-thumb {
+        border-radius: 0.55rem;
     }
    
 </style>

@@ -3,7 +3,7 @@
     <Container class="h-full">
         <ChatWindow :currentConvo="currentConvo" :contactName="contact_name" />
     </Container>
-    <Sidebar class="pt-5" :unreadCount="unreadcount" :conversations="conversations" @change-window="changeWindow">
+    <Sidebar class="pt-5" :unreadCount="unreadcount" :conversations="conversations" @change-window="changeWindow" @toggle-dark-mode="toggleDarkMode">
         <!-- <Conversations @change-window="changeWindow" :conversations="conversations" />-->
     </Sidebar>
   </div>
@@ -28,6 +28,56 @@ export default {
   }, 
   setup(){
     let conversations = [
+        {
+            conversationid: 1,
+            /*last_message_sent: '2021-01-09 08:20:33', */
+            last_message_sent: "2 min",
+            last_message: "Thank you! 🙏 FIRST MESSAGE",
+            direction: "Inbound",
+            unread: true,
+            contact_name: "Sheryl Waters",
+            picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
+        },
+        {
+            conversationid: 2,
+            /* last_message_sent: '2021-01-08 08:20:33', */
+            last_message_sent: "12:35 PM",
+            last_message: "Glad to help!",
+            direction: "Outbound",
+            unread: false,
+            contact_name: "Jean Philipe",
+            picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
+        },
+        {
+            conversationid: 3,
+            /*last_message_sent: '2021-01-01 08:20:33',*/
+            last_message_sent: 'Wed',
+            last_message: "No problem! 😀",
+            direction: "Outbound",
+            unread: true,
+            contact_name: "Don Corleone",
+            picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
+        },
+        {
+            conversationid: 4,
+            /* last_message_sent: '2020-11-01 08:20:33', */
+            last_message_sent: " Nov 1",
+            last_message: "Okay",
+            direction: "Inbound",
+            unread: false,
+            contact_name: "Philip Guzman",
+            picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
+        },
+        {
+            conversationid: 5,
+            /* last_message_sent: '2020-11-01 08:20:33', */
+            last_message_sent: "Oct 31",
+            last_message: "Thanks for the info!",
+            direction: "Inbound",
+            unread: false,
+            contact_name: "Kenny Beats",
+            picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
+        },
         {
             conversationid: 1,
             /*last_message_sent: '2021-01-09 08:20:33', */
@@ -78,6 +128,56 @@ export default {
             contact_name: "Kenny Beats",
             picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
         },
+        {
+            conversationid: 1,
+            /*last_message_sent: '2021-01-09 08:20:33', */
+            last_message_sent: "2 min",
+            last_message: "Thank you! 🙏",
+            direction: "Inbound",
+            unread: true,
+            contact_name: "Sheryl Waters",
+            picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
+        },
+        {
+            conversationid: 2,
+            /* last_message_sent: '2021-01-08 08:20:33', */
+            last_message_sent: "12:35 PM",
+            last_message: "Glad to help!",
+            direction: "Outbound",
+            unread: false,
+            contact_name: "Jean Philipe",
+            picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
+        },
+        {
+            conversationid: 3,
+            /*last_message_sent: '2021-01-01 08:20:33',*/
+            last_message_sent: 'Wed',
+            last_message: "No problem! 😀",
+            direction: "Outbound",
+            unread: true,
+            contact_name: "Don Corleone",
+            picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
+        },
+        {
+            conversationid: 4,
+            /* last_message_sent: '2020-11-01 08:20:33', */
+            last_message_sent: " Nov 1",
+            last_message: "Okay",
+            direction: "Inbound",
+            unread: false,
+            contact_name: "Philip Guzman",
+            picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
+        },
+        {
+            conversationid: 5,
+            /* last_message_sent: '2020-11-01 08:20:33', */
+            last_message_sent: "Oct 31",
+            last_message: "Thanks for the info! LAST MESSAGE",
+            direction: "Inbound",
+            unread: false,
+            contact_name: "Kenny Beats",
+            picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
+        },
     ];
     let unreadcount = 0;
     let currentConvo = 0;
@@ -107,6 +207,9 @@ export default {
           this.contact_name = c;
           //console.log('whoa h', h, c);
       },
+      toggleDarkMode(){
+          console.log('switching theme');
+      }
   }
 }
 </script>
