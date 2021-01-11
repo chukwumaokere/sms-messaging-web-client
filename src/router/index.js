@@ -15,10 +15,10 @@ const routes = [
         component: Home,
         props: true,
         meta: {
-            title: "Conversation with X",
+            title: "Conversation with Contact",
             metaTags: [
-              { name: 'description', content: "Conversation with X" }, 
-              { property: 'og:description', content: "Conversation with X" },
+              { name: 'description', content: "Conversation with Contact" }, 
+              { property: 'og:description', content: "Conversation with Contact" },
             ],
         }
     },

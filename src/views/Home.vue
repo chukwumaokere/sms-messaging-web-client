@@ -1,17 +1,17 @@
 <template>
   <div class="home h-full pl-96">
     <Container class="h-full">
-        <ChatWindow :currentConvo=currentConvo :contactName="contact_name" />
+        <ChatWindow :currentConvo="currentConvo" :contactName="contact_name" />
     </Container>
-    <Sidebar class="pt-5">
-        <Conversations @change-window="changeWindow" :conversations="conversations" />
+    <Sidebar class="pt-5" :unreadCount="unreadcount" :conversations="conversations" @change-window="changeWindow">
+        <!-- <Conversations @change-window="changeWindow" :conversations="conversations" />-->
     </Sidebar>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Conversations from '@/components/Conversations';
+//import Conversations from '@/components/Conversations';
 import ChatWindow from '@/components/ChatWindow';
 import Sidebar from '@/components/Sidebar';
 import Container from '@/components/Container';
@@ -22,7 +22,7 @@ export default {
   name: 'Home',
   components: {
     ChatWindow,
-    Conversations,
+    //Conversations,
     Container,
     Sidebar
   }, 
@@ -79,6 +79,7 @@ export default {
             picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
         },
     ];
+    let unreadcount = 0;
     let currentConvo = 0;
     let contact_name = ref('Select a contact...');
     let params = Router.currentRoute.value.params;
@@ -87,11 +88,17 @@ export default {
         let obj = conversations.find(conv => conv.conversationid == currentConvo );
         //console.log(obj);
         contact_name.value = obj.contact_name;
-    }        
+    } 
+    conversations.forEach(conversation => {
+        if(conversation.unread === true){
+            unreadcount++;
+        }
+    })
     return{
         conversations,
         currentConvo,
         contact_name,
+        unreadcount
     }
   },
   methods:{ 
