@@ -17,39 +17,43 @@
       <div class="px-10 pt-5 chat-area">
           <ChatMessage v-for="message in fullConversation" :key="message.id" :message="message" />
       </div>
-      <div class="input-section px-10 pr-16 w-full bottom-0 absolute mb-10 flex space-x-8" style="width: inherit">
+      <div class="input-section px-10 pr-16 w-full bottom-0 absolute mb-10 flex " style="width: inherit">
           <!-- Added:  'flex space-x-8' above -->
           <div class="relative w-full">
                 <input
                   type="text"
-                  class="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
-                  placeholder="Write Something"
+                  class="flex placeholder-gray-400 w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 transition ease-in duration-200 focus:outline-none focus:shadow-outline focus:shadow-lg active:shaodw-lg"
+                  placeholder="Write something..."
                 />
-                <button
-                  class="absolute flex items-center justify-center h-full w-12 right-0 top-0 text-gray-400 hover:text-gray-600"
-                >
-                  <svg
-                    class="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    ></path>
-                  </svg>
+                <button class="absolute flex items-center justify-center h-full w-12 right-0 top-0 transition ease-in text-gray-400 hover:text-gray-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 transition ease-in text-gray-400 hover:text-gray-600">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+                    </svg>
                 </button>
               </div>
+
+              <div class="ml-6">
+                <button class="flex items-center justify-center h-10 w-10 rounded-full transition ease-in bg-blue-400 hover:bg-blue-600 shadow-xl text-white text-white">
+                    <svg class="w-5 h-5 transform rotate-90 -mr-px"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                    </svg>
+                </button>
+              </div>
+              <!--
               <button
                     class="p-0 w-10 h-10 bg-red-600 rounded-full hover:bg-red-700 active:shadow-lg mouse shadow-lg transition ease-in duration-200 focus:outline-none text-white">
                 <svg class="w-5 h-5 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
                 </svg>
             </button>
+            -->
           
         <!-- Old Input Field
         <div class="w-full flex flex-wrap items-stretch relative space-x-8">

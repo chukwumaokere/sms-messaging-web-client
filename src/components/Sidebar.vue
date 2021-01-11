@@ -21,22 +21,22 @@
     <div class="mt-5 mb-5 px-10 ">
           <ul class="flex flex-row items-center justify-between">
             <li>
-              <article href=""
-                 class="flex items-center pb-3 text-xs font-semibold relative text-indigo-800">
+              <article @click="changeConversations('All')"
+                 class="flex items-center pb-3 text-xs font-semibold relative text-indigo-80 cursor-pointer">
                 <span>All Conversations</span>
                 <span class="absolute left-0 bottom-0 h-1 w-6 bg-indigo-800 rounded-full"></span>
               </article>
             </li>
             <li>
-              <article href=""
-                 class="flex items-center pb-3 text-xs text-gray-700 font-semibold">
-                <span>Unread</span>
+              <article @click="changeConversations('Unread')"
+                 class="flex items-center pb-3 text-xs font-semibold cursor-pointer">
+                <span class="transition ease-in text-gray-400 hover:text-gray-600">Unread</span>
               </article>
             </li>
             <li>
-              <article href=""
-                 class="flex items-center pb-3 text-xs text-gray-700 font-semibold">
-                <span>Starred</span>
+              <article @click="changeConversations('Starred')"
+                 class="flex items-center pb-3 text-xs font-semibold cursor-pointer">
+                <span class="transition ease-in text-gray-400 hover:text-gray-600">Starred</span>
               </article>
             </li>
           </ul>
@@ -64,6 +64,9 @@ export default {
      changeWindow(v, c){
         this.$emit("change-window", v, c);
       },
+    changeConversations(type){
+        console.log('switching to', type);
+    },
  }
 }
 </script>
