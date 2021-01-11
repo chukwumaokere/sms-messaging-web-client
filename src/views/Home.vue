@@ -1,7 +1,7 @@
 <template>
   <div class="home h-full pl-96">
     <Container class="h-full">
-        <ChatWindow :currentConvo="currentConvo" :contactName="contact_name" />
+        <ChatWindow :currentConvo=currentConvo :contactName="contact_name" />
     </Container>
     <Sidebar class="pt-5">
         <Conversations @change-window="changeWindow" :conversations="conversations" />

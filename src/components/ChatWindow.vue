@@ -16,6 +16,7 @@
       </div>
       <div class="px-10 pt-5 chat-area">
           asojkdaiosjdiso
+          
       </div>
       <div class="input-section px-10 w-full bottom-0 absolute mb-10" style="width: inherit">
         <div class="w-full flex flex-wrap items-stretch relative space-x-8">
@@ -37,18 +38,32 @@
 </template>
 
 <script>
+import API from '@/lib/API.js'
 export default {
     name: 'ChatWindow',
     props: {
         conversationid: Number,
-        currentConvo: Number,
+        currentConvo: [Number, String],
         contactName: String,
     },
-    methods: {
-        loadConvo(conversationid){
-            console.log('convo loading', conversationid)
+    setup(){
+        let fullConversation = [];
+        
+        return{
+            fullConversation,
         }
-    }
+    },
+    updated(){
+        API.loadConversationData(this.currentConvo).then(res => {
+            if (res.success){
+                console.log('successfully retrieved result for', this.currentConvo);
+                this.fullConversation = res;
+            }else{
+                console.log('failed to receive result for', this.currentConvo);
+                this.fullConversation = [];
+            }
+        })
+    },
 }
 </script>
 
