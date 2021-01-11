@@ -3,7 +3,7 @@
       <div class="contact-name-bar bg-blue-500 p-5 px-10 shadow-lg" style="width: inherit">
           <div class="contact-name text-xl text-white">
             <div class="flex">
-                <p :id="currentConvo">{{contactName}} </p>
+                <p :id="currentConvo">{{contactName}} &nbsp; ({{phoneNumber}}) </p>
                 <div class="w-6 float-right absolute right-8 ">
                     <button class="p-0 w-7 h-7 bg-transparent rounded-lg object-cover mouse transition ease-in duration-200 focus:outline-none text-white text-opacity-50 hover:text-opacity-100">
                         <svg class="w-6 h-6 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -87,6 +87,7 @@ export default {
         conversationid: Number,
         currentConvo: [Number, String],
         contactName: String,
+        phoneNumber: String,
     },
     setup(){
         let fullConversation = [

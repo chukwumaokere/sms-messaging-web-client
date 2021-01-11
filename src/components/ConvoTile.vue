@@ -1,5 +1,5 @@
 <template>
-<a :href="href" @click="changeChat(conversation.conversationid, conversation.contact_name)" >
+<a :href="href" @click="changeChat(conversation.conversationid, conversation.contact_name, conversation.phone_number)" >
     
   <article class="p-4 px-10 flex space-x-4 transition ease-in hover:bg-gray-100 dark:hover:bg-gray-500" :class="{'bg-gray-200 dark:bg-gray-800': isActive }" style="width: inherit;">
         
@@ -47,7 +47,7 @@ export default {
         }
     },
     methods: {
-        changeChat(convoid, contact_name){
+        changeChat(convoid, contact_name, phone_number){
             console.log('switching window to:', convoid, contact_name); 
             let elements = document.getElementsByClassName('bg-gray-200');
             let elementsD = document.getElementsByClassName('dark:bg-gray-800');    
@@ -61,7 +61,7 @@ export default {
             this.$el.children[0].classList.add('bg-gray-200')
             this.$el.children[0].classList.add('dark:bg-gray-800')            
             //console.log(this.$el.children[1]);
-            this.$emit("change-window", convoid, contact_name);
+            this.$emit("change-window", convoid, contact_name, phone_number);
         }
     }
 }

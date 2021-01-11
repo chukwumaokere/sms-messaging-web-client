@@ -1,7 +1,7 @@
 <template>
   <div class="home h-full pl-96">
     <Container class="h-full">
-        <ChatWindow :currentConvo="currentConvo" :contactName="contact_name" />
+        <ChatWindow :currentConvo="currentConvo" :contactName="contact_name" :phoneNumber="phone_number" />
     </Container>
     <Sidebar class="pt-5" :unreadCount="unreadcount" :conversations="conversations" @change-window="changeWindow" @change-conversation-type="changeConversations" @toggle-dark-mode="toggleDarkMode">
         <!-- <Conversations @change-window="changeWindow" :conversations="conversations" />-->
@@ -36,6 +36,7 @@ export default {
             direction: "Inbound",
             unread: true,
             contact_name: "Cheryl Waters",
+            phone_number: '+17733072548',
             picture: "https://kexp.org/media/filer_public_thumbnails/filer_public/06/84/06842e4e-ffce-41de-aa9c-7aeb2a886466/cheryl_3.jpg__800x800_q85_crop_subsampling-2_upscale.jpg",
         },
         {
@@ -46,6 +47,7 @@ export default {
             direction: "Outbound",
             unread: false,
             contact_name: "Jean Philipe",
+            phone_number: '+17739898461',
             picture: "https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=144&amp;h=144",
         },
         {
@@ -56,6 +58,7 @@ export default {
             direction: "Outbound",
             unread: true,
             contact_name: "Don Corleone",
+            phone_number: '+19896145586',
             picture: "https://upload.wikimedia.org/wikipedia/en/2/21/Godfather15_flip.jpg",
         },
         {
@@ -66,6 +69,7 @@ export default {
             direction: "Inbound",
             unread: false,
             contact_name: "Philip Guzman",
+            phone_number: '+13126763343',
             picture: "https://pbs.twimg.com/profile_images/951121410952519681/IxOylf-r_400x400.jpg",
         },
         {
@@ -76,6 +80,7 @@ export default {
             direction: "Inbound",
             unread: false,
             contact_name: "Kenny Beats",
+            phone_number: '+17733072548',
             picture: "https://okayplayer-wpengine.netdna-ssl.com/wp-content/uploads/2018/08/AP-1WPPWUMF12111_hires_jpeg_24bit_rgb-2-715x894.jpg",
         },
         {
@@ -86,6 +91,7 @@ export default {
             direction: "Inbound",
             unread: false,
             contact_name: "Sean Lock",
+            phone_number: '+17733072548',
             picture: "https://jilliebushell.com/wp-content/uploads/2017/01/Sean-Lock-Headshot.jpg",
         },
         {
@@ -96,6 +102,7 @@ export default {
             direction: "Outbound",
             unread: false,
             contact_name: "Donald Glover",
+            phone_number: '+17733072548',
             picture: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Donald_Glover_TIFF_2015.jpg",
         },
         {
@@ -106,6 +113,7 @@ export default {
             direction: "Outbound",
             unread: true,
             contact_name: "Chris Martin",
+            phone_number: '+17733072548',
             picture: "https://www.looktothestars.org/photo/13294-chris-martin/story_half_width.jpg",
         },
         {
@@ -116,6 +124,7 @@ export default {
             direction: "Inbound",
             unread: false,
             contact_name: "Selena Gomez",
+            phone_number: '+17733072548',
             picture: "https://content.11alive.com/photo/2015/10/09/635799893056980690-GettyImages-464520119_424145_ver1.0.jpg",
         },
         {
@@ -126,6 +135,7 @@ export default {
             direction: "Inbound",
             unread: false,
             contact_name: "Will Smith",
+            phone_number: '+17733072548',
             picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
         },
         {
@@ -136,6 +146,7 @@ export default {
             direction: "Inbound",
             unread: false,
             contact_name: "Chris Rock",
+            phone_number: '+17733072548',
             picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
         },
         {
@@ -146,6 +157,7 @@ export default {
             direction: "Outbound",
             unread: false,
             contact_name: "Kat Williams",
+            phone_number: '+17733072548',
             picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
         },
         {
@@ -156,6 +168,7 @@ export default {
             direction: "Outbound",
             unread: false,
             contact_name: "Dave Chappelle",
+            phone_number: '+17733072548',
             picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
         },
         {
@@ -166,6 +179,7 @@ export default {
             direction: "Inbound",
             unread: false,
             contact_name: "Kevin Hart",
+            phone_number: '+17733072548',
             picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
         },
         {
@@ -176,6 +190,7 @@ export default {
             direction: "Inbound",
             unread: false,
             contact_name: "David O'Doherty",
+            phone_number: '+12345678901',
             picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
         },
     ]);
@@ -183,12 +198,15 @@ export default {
     let unreadcount = 0;
     let currentConvo = 0;
     let contact_name = ref('Select a contact...');
+    let phone_number = ref('No Phone Number');
     let params = Router.currentRoute.value.params;
+    
     currentConvo = params.conversationid ? params.conversationid : 0;
     if (currentConvo !== 0 ){
         let obj = conversations.value.find(conv => conv.conversationid == currentConvo );
         //console.log(obj);
         contact_name.value = obj.contact_name;
+        phone_number.value = obj.phone_number;
     } 
     conversations.value.forEach(conversation => {
         if(conversation.unread === true){
@@ -209,6 +227,7 @@ export default {
         conversations,
         currentConvo,
         contact_name,
+        phone_number,
         unreadcount,
         initConversations,
     }
@@ -243,9 +262,10 @@ export default {
               //console.log(this.conversations);
           }
       },
-      changeWindow(h, c){
+      changeWindow(h, c, p){
           this.currentConvo = h;
           this.contact_name = c;
+          this.phone_number = p;
           //console.log('whoa h', h, c);
       },
       toggleDarkMode(){

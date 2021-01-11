@@ -14,8 +14,8 @@ export default {
      ConvoTile,
  },
  methods:{
-     changeWindow(v, c){
-        this.$emit("change-window", v, c);
+     changeWindow(v, c, p){
+        this.$emit("change-window", v, c,p );
         //console.log('whoa v', v, c);
       },
  }

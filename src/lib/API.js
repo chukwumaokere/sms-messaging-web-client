@@ -17,14 +17,22 @@ export default {
         }
     },
     async authWithTwilio(){
-        let accountSid = twilioInfo.accountSid;
-        let authToken = twilioInfo.authToken;
-        return{
-            accountSid,
-            authToken,
-        }
+       
     },
     async VTLogin(info){
         return info
+    },
+    async sendSMSMessage(){
+        let accountSid = twilioInfo.accountSid;
+        let authToken = twilioInfo.authToken;
+        let fromNumber = twilioInfo.fromNumber;
+        var twilio = require('twilio');
+        var client = new twilio(accountSid, authToken);
+
+        client.messages.create({
+            body: 'test',
+            to: '+17733072548',
+            from: fromNumber
+        }).then((message) => {console.log(message.sid)});
     }
 }

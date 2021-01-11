@@ -117,8 +117,8 @@ export default {
         }
     },
     methods:{
-     changeWindow(v, c){
-        this.$emit("change-window", v, c);
+     changeWindow(v, c, p){
+        this.$emit("change-window", v, c, p);
       },
     changeConversations(type){
         console.log('switching to', type);

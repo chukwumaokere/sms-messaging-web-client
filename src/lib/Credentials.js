@@ -1,2 +1,2 @@
-const twilioInfo = { accountSid: '', authToken: '' }
+const twilioInfo = { accountSid: '', authToken: '', fromNumber: '' }
 export default twilioInfo
