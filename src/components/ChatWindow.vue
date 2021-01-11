@@ -24,6 +24,8 @@
                   type="text"
                   class="flex placeholder-gray-400 dark:placeholder-gray-200 dark:bg-gray-700 dark:border-transparent dark:focus:border-gray-800 dark:text-white w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 transition ease-in duration-200 focus:outline-none focus:shadow-outline focus:shadow-lg active:shaodw-lg"
                   placeholder="Write something..."
+                  id="message-body"
+                  @keyup.enter="sendMessage(phoneNumber)"
                 />
                 <button class="absolute focus:outline-none flex items-center justify-center h-full w-12 right-0 top-0 transition ease-in text-gray-400 hover:text-gray-600 dark:hover:text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 transition ease-in text-gray-400 hover:text-gray-600 dark:text-gray-400 dark:hover:text-white">
@@ -33,7 +35,7 @@
               </div>
 
               <div class="ml-6">
-                <button class="flex items-center focus:outline-none justify-center h-10 w-10 rounded-full transition ease-in bg-blue-400 hover:bg-blue-600 shadow-xl text-white text-white dark:bg-blue-500 dark:hover:bg-blue-600">
+                <button @click="sendMessage(phoneNumber)" class="flex items-center focus:outline-none justify-center h-10 w-10 rounded-full transition ease-in bg-blue-400 hover:bg-blue-600 shadow-xl text-white text-white dark:bg-blue-500 dark:hover:bg-blue-600">
                     <svg class="w-5 h-5 transform rotate-90 -mr-px"
                         fill="none"
                         stroke="currentColor"
@@ -199,6 +201,14 @@ export default {
             }
         })
     },
+    methods:{
+        sendMessage(t){
+            let b = document.getElementById('message-body').value;
+            console.log('triggering twilio api', t, b)
+            API.sendSMSMessage(t, b);
+            document.getElementById('message-body').value = '';
+        }
+    }
 }
 </script>
 

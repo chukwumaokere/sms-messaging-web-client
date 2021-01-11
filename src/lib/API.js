@@ -22,16 +22,16 @@ export default {
     async VTLogin(info){
         return info
     },
-    async sendSMSMessage(){
+    async sendSMSMessage(to_number, message_body){
         let accountSid = twilioInfo.accountSid;
         let authToken = twilioInfo.authToken;
         let fromNumber = twilioInfo.fromNumber;
         var twilio = require('twilio');
         var client = new twilio(accountSid, authToken);
-
+        console.log('API: sending message', to_number, message_body)
         client.messages.create({
-            body: 'test',
-            to: '+17733072548',
+            body: message_body,
+            to: to_number,
             from: fromNumber
         }).then((message) => {console.log(message.sid)});
     }
