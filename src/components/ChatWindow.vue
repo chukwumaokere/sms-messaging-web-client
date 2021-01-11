@@ -1,5 +1,5 @@
 <template>
-  <div v-if="currentConvo > 0" class="m flex flex-col pb-24 bg-gray-300 text-black dark:bg-gray-300 dark:text-black w-full relative">
+  <div v-if="currentConvo > 0" class="m flex flex-col pb-24 bg-gray-300 text-black dark:bg-gray-600 dark:text-black w-full relative">
       <div class="contact-name-bar bg-blue-500 p-5 px-10 shadow-lg" style="width: inherit">
           <div class="contact-name text-xl text-white">
             <div class="flex">
@@ -22,18 +22,18 @@
           <div class="relative w-full">
                 <input
                   type="text"
-                  class="flex placeholder-gray-400 w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 transition ease-in duration-200 focus:outline-none focus:shadow-outline focus:shadow-lg active:shaodw-lg"
+                  class="flex placeholder-gray-400 dark:placeholder-gray-200 dark:bg-gray-700 dark:border-transparent dark:focus:border-gray-800 dark:text-white w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 transition ease-in duration-200 focus:outline-none focus:shadow-outline focus:shadow-lg active:shaodw-lg"
                   placeholder="Write something..."
                 />
-                <button class="absolute flex items-center justify-center h-full w-12 right-0 top-0 transition ease-in text-gray-400 hover:text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 transition ease-in text-gray-400 hover:text-gray-600">
+                <button class="absolute flex items-center justify-center h-full w-12 right-0 top-0 transition ease-in text-gray-400 hover:text-gray-600 dark:hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 transition ease-in text-gray-400 hover:text-gray-600 dark:text-gray-400 dark:hover:text-white">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
                     </svg>
                 </button>
               </div>
 
               <div class="ml-6">
-                <button class="flex items-center justify-center h-10 w-10 rounded-full transition ease-in bg-blue-400 hover:bg-blue-600 shadow-xl text-white text-white">
+                <button class="flex items-center justify-center h-10 w-10 rounded-full transition ease-in bg-blue-400 hover:bg-blue-600 shadow-xl text-white text-white dark:bg-blue-500 dark:hover:bg-blue-600">
                     <svg class="w-5 h-5 transform rotate-90 -mr-px"
                         fill="none"
                         stroke="currentColor"

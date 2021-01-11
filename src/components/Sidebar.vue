@@ -3,7 +3,7 @@
     <div class="messages-bar flex pb-5 px-10">
         <div class="flex flex-row items-center"><p class="text-xl font-semibold">Messages</p> &nbsp; <div class="flex items-center justify-center ml-2 text-xs h-5 w-5 text-white bg-red-500 rounded-full font-medium">{{unreadCount}}</div></div>
         <div class="w-6 float-right absolute right-8 ">
-            <button class="p-0 w-7 h-7 bg-transparent ripple rounded-lg object-cover mouse transition ease-in duration-200 focus:outline-none text-gray-400 hover:text-gray-700">
+            <button class="p-0 w-7 h-7 bg-transparent ripple rounded-lg object-cover mouse transition ease-in duration-200 focus:outline-none text-gray-400 hover:text-gray-700 dark:hover:text-white">
                 <!-- three dots icon
                 <svg class="w-6 h-6 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
@@ -28,20 +28,22 @@
             <li>
               <article @click="changeConversations('All')"
                  class="flex items-center pb-3 text-xs font-semibold relative text-indigo-80 cursor-pointer">
-                <span>All Conversations</span>
-                <span class="absolute left-0 bottom-0 h-1 w-6 bg-indigo-800 rounded-full"></span>
+                <span :class="{'text-black dark:text-white': currentView == 'All', 'text-gray-400': currentView !== 'All' }" class="transition ease-in hover:text-black dark:hover:text-white">All Conversations</span>
+                <span v-if="currentView == 'All'" class="absolute left-0 bottom-0 h-1 w-6 bg-indigo-800 dark:bg-indigo-400 rounded-full"></span>
               </article>
             </li>
             <li>
               <article @click="changeConversations('Unread')"
-                 class="flex items-center pb-3 text-xs font-semibold cursor-pointer">
-                <span class="transition ease-in text-gray-400 hover:text-gray-600">Unread</span>
+                 class="flex items-center pb-3 text-xs font-semibold relative text-indigo-80 cursor-pointer">
+                <span :class="{'text-black dark:text-white': currentView == 'Unread', 'text-gray-400': currentView !== 'Unread' }" class="transition ease-in hover:text-black dark:hover:text-white">Unread</span>
+                <span v-if="currentView == 'Unread'" class="absolute left-0 bottom-0 h-1 w-6 bg-indigo-800 dark:bg-indigo-400 rounded-full"></span>
               </article>
             </li>
             <li>
               <article @click="changeConversations('Starred')"
-                 class="flex items-center pb-3 text-xs font-semibold cursor-pointer">
-                <span class="transition ease-in text-gray-400 hover:text-gray-600">Starred</span>
+                 class="flex items-center pb-3 text-xs font-semibold relative text-indigo-80 cursor-pointer">
+                <span :class="{'text-black dark:text-white': currentView == 'Starred', 'text-gray-400': currentView !== 'Starred' }" class="transition ease-in hover:text-black dark:hover:text-white">Starred</span>
+                <span v-if="currentView == 'Starred'" class="absolute left-0 bottom-0 h-1 w-6 bg-indigo-800 dark:bg-indigo-400 rounded-full"></span>
               </article>
             </li>
           </ul>
@@ -97,6 +99,7 @@
 
 <script>
 import Conversations from './Conversations';
+import { ref } from 'vue';
 export default {
     name: 'Sidebar',
     components:{
@@ -106,12 +109,20 @@ export default {
         unreadCount: [String, Number],
         conversations: Array,
     },
+    setup(){
+        let currentView = ref("All");
+
+        return{
+            currentView,
+        }
+    },
     methods:{
      changeWindow(v, c){
         this.$emit("change-window", v, c);
       },
     changeConversations(type){
         console.log('switching to', type);
+        this.currentView = type;
     },
     toggleDarkMode(){
         this.$emit('toggle-dark-mode');
