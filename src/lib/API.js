@@ -42,6 +42,10 @@ export default {
             swal('Error', `Something went wrong! Please try again\n${err}`, 'error')
         })
     },
+    async loadLastMessage(phoneNumber){
+        //this will get the last message for the Sidebar loading.  
+        console.log(phoneNumber);
+    },
     async authWithTwilio(){
        
     },
