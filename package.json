@@ -1,6 +1,6 @@
 {
   "name": "messages-app",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -14,8 +14,9 @@
     }
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "twilio": "^3.54.2",
+    "sweetalert": "^2.1.2",
     "vue": "^3.0.0",
     "vue-router": "^4.0.2"
   },

@@ -1,4 +1,5 @@
-import twilioInfo from './Credentials';
+const axios = require('axios');
+import swal from 'sweetalert';
 export default {
     async loadConversationData(conversationid){
         console.log('request received for', conversationid);
@@ -23,16 +24,20 @@ export default {
         return info
     },
     async sendSMSMessage(to_number, message_body){
-        let accountSid = twilioInfo.accountSid;
-        let authToken = twilioInfo.authToken;
-        let fromNumber = twilioInfo.fromNumber;
-        var twilio = require('twilio');
-        var client = new twilio(accountSid, authToken);
         console.log('API: sending message', to_number, message_body)
-        client.messages.create({
-            body: message_body,
-            to: to_number,
-            from: fromNumber
-        }).then((message) => {console.log(message.sid)});
+        return axios.post('https://devl06.borugroup.com/cokere/twilio/send_sms.php', {
+            to_number: to_number,
+            message_body: message_body,
+        }).then(function(response){
+            console.log('response from send_sms.php', response);
+            if (response.status == 200 && response.data.success == true && response.data.message_sent != 'FF'){
+                console.log('Message sent successfully');
+                return true;
+            }else{
+                console.log('Message failed to send');
+                swal('Error', 'Something went wrong! Please try again', 'error')
+                return false;
+            }
+        })
     }
 }

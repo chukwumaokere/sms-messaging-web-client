@@ -205,8 +205,11 @@ export default {
         sendMessage(t){
             let b = document.getElementById('message-body').value;
             console.log('triggering twilio api', t, b)
-            API.sendSMSMessage(t, b);
-            document.getElementById('message-body').value = '';
+            API.sendSMSMessage(t, b).then(res => {
+                if(res === true){
+                    document.getElementById('message-body').value = '';
+                }
+            });
         }
     }
 }
