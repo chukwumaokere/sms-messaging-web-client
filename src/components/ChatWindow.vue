@@ -18,7 +18,6 @@
           <ChatMessage v-for="message in fullConversation" :key="message.id" :message="message" />
       </div>
       <div class="input-section px-10 pr-16 w-full bottom-0 absolute pb-10 flex " style="width: inherit">
-          <!-- Added:  'flex space-x-8' above -->
           <input
                 id="file-upload"
                 style="height:0px; width:0px; overflow:hidden"
@@ -28,22 +27,19 @@
           <div class="relative w-full">
                 <input
                   type="text"
-                  class="flex placeholder-gray-400 dark:placeholder-gray-200 dark:bg-gray-700 dark:border-transparent dark:focus:border-gray-800 dark:text-white w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 transition ease-in duration-200 focus:outline-none focus:shadow-outline focus:shadow-lg active:shaodw-lg"
+                  class="flex pr-32 placeholder-gray-400 dark:placeholder-gray-200 dark:bg-gray-700 dark:border-transparent dark:focus:border-gray-800 dark:text-white w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 transition ease-in duration-200 focus:outline-none focus:shadow-outline focus:shadow-lg active:shaodw-lg"
                   placeholder="Write something..."
                   id="message-body"
                   @keyup.enter="sendMessage(phoneNumber)"
                 />
-                <!--
-                <input
-                id="file-upload"
-                style="height:0px; width:0px; overflow:hidden"
-                />
-                -->
-                <button @click="fileUpload()" class="absolute focus:outline-none flex items-center justify-center h-full w-12 right-0 top-0 transition ease-in text-gray-400 hover:text-gray-600 dark:hover:text-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 transition ease-in text-gray-400 hover:text-gray-600 dark:text-gray-400 dark:hover:text-white">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
-                    </svg>
-                </button>
+                <span>
+                    <small v-if="uploadedFile" class="absolute dark:text-white opacity-70 right-10 top-0 flex items-center justify-center h-full">File attached.</small>
+                    <button @click="fileUpload()" class="absolute focus:outline-none flex items-center justify-center h-full w-12 right-0 top-0 transition ease-in text-gray-400 hover:text-gray-600 dark:hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" :class="{'text-green-500 dark:text-green-500': uploadedFile}" class="h-6 w-6 transition ease-in text-gray-400 hover:text-gray-600 dark:text-gray-400 dark:hover:text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+                        </svg>
+                    </button>
+                </span>
               </div>
 
               <div class="ml-6">
@@ -293,6 +289,7 @@ export default {
             },
 
         ]
+        let uploadedFile;
 
         function loadConversation(){
             API.loadConversationData(props.phoneNumber, props.contactName).then(res => {
@@ -349,26 +346,11 @@ export default {
             fullConversation,
             placeholderConversation,
             loadConversation,
+            uploadedFile,
         }
     },
     updated(){
-        /*
-        API.loadConversationData(this.phoneNumber, this.contactName).then(res => {
-            if (res.success === true){
-                console.log('successfully retrieved result for', this.currentConvo, this.phoneNumber);
-                if(this.fullConversation === res.convo){
-                    //do nothing
-                }else{
-                    this.fullConversation = res.convo;
-                    console.log('compare these two', this.fullConversation, res.convo);
-                }
-                console.log('res convo', res.convo);
-            }else{
-                console.log('failed to receive result for', this.currentConvo);
-                this.fullConversation = this.placeholderConversation;
-            }
-        })
-        */
+
     },
     beforeUpdate(){
         console.log('before updated 2')
@@ -394,7 +376,24 @@ export default {
         fileUpload(){
             console.log('initiating file upload');
             document.getElementById('file-upload').click();
-        }
+        },
+        fetchConversation(){
+            API.loadConversationData(this.phoneNumber, this.contactName).then(res => {
+            if (res.success === true){
+                console.log('successfully retrieved result for', this.currentConvo, this.phoneNumber);
+                if(this.fullConversation === res.convo){
+                    //do nothing
+                }else{
+                    this.fullConversation = res.convo;
+                    console.log('compare these two', this.fullConversation, res.convo);
+                }
+                console.log('res convo', res.convo);
+            }else{
+                console.log('failed to receive result for', this.currentConvo);
+                this.fullConversation = this.placeholderConversation;
+            }
+        })
+        },
     }
 }
 </script>
