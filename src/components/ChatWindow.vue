@@ -81,7 +81,7 @@
 import API from '@/lib/API.js'
 import ChatMessage from './ChatMessage';
 import swal from 'sweetalert';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 export default {
     name: 'ChatWindow',
@@ -281,6 +281,17 @@ export default {
             },
 
         ]
+
+        function scrollToBottom(){
+            let container = document.getElementById('messages');
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        onMounted(() => {
+            scrollToBottom();
+        });
+        
+
         return{
             fullConversation,
             placeholderConversation,
@@ -317,7 +328,7 @@ export default {
             }else{
                 swal('Error', 'Please enter a message or provide an attachment!', 'error');
             }
-        }
+        },
     }
 }
 </script>
