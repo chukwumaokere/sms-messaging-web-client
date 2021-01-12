@@ -19,6 +19,12 @@
       </div>
       <div class="input-section px-10 pr-16 w-full bottom-0 absolute pb-10 flex " style="width: inherit">
           <!-- Added:  'flex space-x-8' above -->
+          <input
+                id="file-upload"
+                style="height:0px; width:0px; overflow:hidden"
+                name="file"
+                type="file"
+                />
           <div class="relative w-full">
                 <input
                   type="text"
@@ -27,7 +33,13 @@
                   id="message-body"
                   @keyup.enter="sendMessage(phoneNumber)"
                 />
-                <button class="absolute focus:outline-none flex items-center justify-center h-full w-12 right-0 top-0 transition ease-in text-gray-400 hover:text-gray-600 dark:hover:text-white">
+                <!--
+                <input
+                id="file-upload"
+                style="height:0px; width:0px; overflow:hidden"
+                />
+                -->
+                <button @click="fileUpload()" class="absolute focus:outline-none flex items-center justify-center h-full w-12 right-0 top-0 transition ease-in text-gray-400 hover:text-gray-600 dark:hover:text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-6 w-6 transition ease-in text-gray-400 hover:text-gray-600 dark:text-gray-400 dark:hover:text-white">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
                     </svg>
@@ -335,6 +347,10 @@ export default {
         },
         uploadImage(event){
             console.log(event);
+        },
+        fileUpload(){
+            console.log('initiating file upload');
+            document.getElementById('file-upload').click();
         }
     }
 }
