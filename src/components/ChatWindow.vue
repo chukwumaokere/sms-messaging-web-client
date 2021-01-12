@@ -286,7 +286,7 @@ export default {
             let container = document.getElementById('messages');
             container.scrollTop = container.scrollHeight;
         }
-        
+
         onMounted(() => {
             scrollToBottom();
         });
@@ -329,6 +329,9 @@ export default {
                 swal('Error', 'Please enter a message or provide an attachment!', 'error');
             }
         },
+        uploadImage(event){
+            console.log(event);
+        }
     }
 }
 </script>
