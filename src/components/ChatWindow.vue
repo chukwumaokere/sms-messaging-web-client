@@ -288,7 +288,11 @@ export default {
         }
 
         onMounted(() => {
-            scrollToBottom();
+            try{ 
+                scrollToBottom();
+            }catch(err){
+                console.log(err);
+            }
         });
         
 
