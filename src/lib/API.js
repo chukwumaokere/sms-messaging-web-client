@@ -32,7 +32,7 @@ export default {
                 }
             }else{
                 console.log('Something failed!');
-                swal('Error', `Something went wrong when trying to fetch conversation for ${contactName} (${phoneNumber})! Please try refreshing`, 'error')
+                swal('Error', `Something went wrong when trying to fetch conversation for ${contactName} (${phoneNumber})!\n\n Please try refreshing`, 'error')
                 return {
                     success: false,
                 };
