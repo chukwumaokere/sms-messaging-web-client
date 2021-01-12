@@ -1,5 +1,5 @@
 <template>
-  <div v-if="currentConvo > 0" class="m flex flex-col pb-24 bg-gray-300 text-black dark:bg-gray-600 dark:text-black w-full relative">
+  <div v-if="currentConvo > 0 && loading == false" class="m flex flex-col pb-24 bg-gray-300 text-black dark:bg-gray-600 dark:text-black w-full relative">
       <div class="contact-name-bar bg-blue-500 p-5 px-10 shadow-lg" style="width: inherit">
           <div class="contact-name text-xl text-white">
             <div class="flex">
@@ -56,31 +56,30 @@
                     </svg>
                 </button>
               </div>
-              <!--
-              <button
-                    class="p-0 w-10 h-10 bg-red-600 rounded-full hover:bg-red-700 active:shadow-lg mouse shadow-lg transition ease-in duration-200 focus:outline-none text-white">
-                <svg class="w-5 h-5 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
-                </svg>
-            </button>
-            -->
-          
-        <!-- Old Input Field
-        <div class="w-full flex flex-wrap items-stretch relative space-x-8">
-            <input type="text" placeholder="Write Something" class="flex-shrink flex-grow flex-auto px-3 py-3 placeholder-gray-400 text-gray-700 relative bg-white bg-white rounded text-sm shadow outline-none transition ease-in duration-200 focus:outline-none focus:shadow-outline focus:shadow-lg active:shaodw-lg"/>
-            <button
-                    class="p-0 w-12 h-12 bg-red-600 rounded-full hover:bg-red-700 active:shadow-lg mouse shadow-lg transition ease-in duration-200 focus:outline-none text-white">
-                <svg class="w-6 h-6 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
-                </svg>
-            </button>
-        </div>
-        -->
       </div>
   </div>
-  <div v-else class="m bg-gray-300 dark:bg-gray-600 dark:text-white text-black dark:bg-gray-300 dark:text-black w-full relative" >
+  <div v-if="!currentConvo > 0" class="m bg-gray-300 dark:bg-gray-600 dark:text-white text-black dark:bg-gray-300 dark:text-black w-full relative" >
       <div class="select-a-convo p-10 flex justify-center h-full">
         <h1 class="animate-bounce place-self-center text-2xl">👈 Select a conversation from the left menu to get started!</h1>
+      </div>
+  </div>
+  <div v-if="loading" class="m bg-gray-300 dark:bg-gray-600 dark:text-white text-black dark:bg-gray-300 dark:text-black w-full relative" >
+      <div class="contact-name-bar bg-blue-500 p-5 px-10 shadow-lg" style="width: inherit">
+          <div class="contact-name text-xl text-white">
+            <div class="flex">
+                <p :id="currentConvo">{{contactName}} &nbsp; ({{phoneNumber}}) </p>
+                <div class="w-6 float-right absolute right-8 ">
+                    <button class="p-0 w-7 h-7 bg-transparent rounded-lg object-cover mouse transition ease-in duration-200 focus:outline-none text-white text-opacity-50 hover:text-opacity-100">
+                        <svg class="w-6 h-6 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+          </div>          
+      </div>
+      <div id="messages" class="px-10 pt-5 chat-area pb-15 overflow-y-auto max-h-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+          <ChatSkeleton />
       </div>
   </div>
 </template>
@@ -88,13 +87,15 @@
 <script>
 import API from '@/lib/API.js'
 import ChatMessage from './ChatMessage';
+import ChatSkeleton from './ChatSkeleton';
 import swal from 'sweetalert';
-import { ref, onUpdated, onMounted, onBeforeUpdate, onBeforeMount } from 'vue';
+import { ref, onUpdated, onMounted, onBeforeUpdate, onBeforeMount, watch } from 'vue';
 
 export default {
     name: 'ChatWindow',
     components:{
         ChatMessage,
+        ChatSkeleton,
     },
     props: {
         conversationid: Number,
@@ -290,21 +291,26 @@ export default {
 
         ]
         let uploadedFile;
+        let loading = ref(true);
 
         function loadConversation(){
+            loading.value = true;
             API.loadConversationData(props.phoneNumber, props.contactName).then(res => {
                 if (res.success === true){
                     console.log('successfully retrieved result for', props.currentConvo, props.phoneNumber);
                     if(fullConversation.value === res.convo){
                         //do nothing
+                        loading.value = false;
                     }else{
+                        loading.value = false;
                         fullConversation.value = res.convo;
                         console.log('compare these two', fullConversation.value, res.convo);
                     }
-                    console.log('res convo', res.convo);
+                    //console.log('res convo', res.convo);
                 }else{
                     console.log('failed to receive result for', props.currentConvo);
                     fullConversation.value = placeholderConversation;
+                    loading.value = false;
                 }
             })
         }
@@ -315,7 +321,11 @@ export default {
         }
 
         onBeforeMount(() => {
-            loadConversation();
+            if(props.currentConvo > 0){
+                loadConversation();
+            }else{
+                loading.value = false;
+            }
         });
 
         onMounted(() => {
@@ -338,15 +348,19 @@ export default {
 
         onBeforeUpdate(() => {
             console.log('before update');
-            loadConversation();
-        })
+        });
         
+        watch(() => props.currentConvo, (newValue, oldValue) => {
+            console.log('value switched to', oldValue, newValue);
+            loadConversation();
+        });
 
         return{
             fullConversation,
             placeholderConversation,
             loadConversation,
             uploadedFile,
+            loading,
         }
     },
     updated(){
@@ -379,22 +393,22 @@ export default {
         },
         fetchConversation(){
             API.loadConversationData(this.phoneNumber, this.contactName).then(res => {
-            if (res.success === true){
-                console.log('successfully retrieved result for', this.currentConvo, this.phoneNumber);
-                if(this.fullConversation === res.convo){
-                    //do nothing
+                if (res.success === true){
+                    console.log('successfully retrieved result for', this.currentConvo, this.phoneNumber);
+                    if(this.fullConversation === res.convo){
+                        //do nothing
+                    }else{
+                        this.fullConversation = res.convo;
+                        console.log('compare these two', this.fullConversation, res.convo);
+                    }
+                    console.log('res convo', res.convo);
                 }else{
-                    this.fullConversation = res.convo;
-                    console.log('compare these two', this.fullConversation, res.convo);
+                    console.log('failed to receive result for', this.currentConvo);
+                    this.fullConversation = this.placeholderConversation;
                 }
-                console.log('res convo', res.convo);
-            }else{
-                console.log('failed to receive result for', this.currentConvo);
-                this.fullConversation = this.placeholderConversation;
-            }
-        })
+            })
         },
-    }
+    },
 }
 </script>
 
