@@ -93,7 +93,7 @@
 import API from '@/lib/API.js'
 import ChatMessage from './ChatMessage';
 import swal from 'sweetalert';
-import { ref, onMounted } from 'vue';
+import { ref, onUpdated, onMounted, onBeforeUpdate, onBeforeMount } from 'vue';
 
 export default {
     name: 'ChatWindow',
@@ -106,7 +106,7 @@ export default {
         contactName: String,
         phoneNumber: String,
     },
-    setup(){
+    setup(props){
         let fullConversation = ref([
             {
                 id: 50,
@@ -294,26 +294,65 @@ export default {
 
         ]
 
+        function loadConversation(){
+            API.loadConversationData(props.phoneNumber, props.contactName).then(res => {
+                if (res.success === true){
+                    console.log('successfully retrieved result for', props.currentConvo, props.phoneNumber);
+                    if(fullConversation.value === res.convo){
+                        //do nothing
+                    }else{
+                        fullConversation.value = res.convo;
+                        console.log('compare these two', fullConversation.value, res.convo);
+                    }
+                    console.log('res convo', res.convo);
+                }else{
+                    console.log('failed to receive result for', props.currentConvo);
+                    fullConversation.value = placeholderConversation;
+                }
+            })
+        }
+        
         function scrollToBottom(){
             let container = document.getElementById('messages');
             container.scrollTop = container.scrollHeight;
         }
 
+        onBeforeMount(() => {
+            loadConversation();
+        });
+
         onMounted(() => {
+            console.log('mounted');
             try{ 
                 scrollToBottom();
             }catch(err){
                 console.log(err);
             }
         });
+
+        onUpdated(() => {
+            console.log('updated');
+            try{ 
+                scrollToBottom();
+            }catch(err){
+                console.log(err);
+            }
+        });
+
+        onBeforeUpdate(() => {
+            console.log('before update');
+            loadConversation();
+        })
         
 
         return{
             fullConversation,
             placeholderConversation,
+            loadConversation,
         }
     },
     updated(){
+        /*
         API.loadConversationData(this.phoneNumber, this.contactName).then(res => {
             if (res.success === true){
                 console.log('successfully retrieved result for', this.currentConvo, this.phoneNumber);
@@ -329,6 +368,10 @@ export default {
                 this.fullConversation = this.placeholderConversation;
             }
         })
+        */
+    },
+    beforeUpdate(){
+        console.log('before updated 2')
     },
     methods:{
         sendMessage(t){
