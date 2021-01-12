@@ -80,7 +80,9 @@
 <script>
 import API from '@/lib/API.js'
 import ChatMessage from './ChatMessage';
-import swal from 'sweetalert'
+import swal from 'sweetalert';
+import { ref } from 'vue';
+
 export default {
     name: 'ChatWindow',
     components:{
@@ -93,7 +95,7 @@ export default {
         phoneNumber: String,
     },
     setup(){
-        let fullConversation = [
+        let fullConversation = ref([
             {
                 id: 50,
                 message: "I was wondering what documents I submitted",
@@ -185,20 +187,119 @@ export default {
                 imgsrc: "",
             },
 
-        ];
-        
+        ]);
+        let placeholderConversation = [
+            {
+                id: 50,
+                message: "I was wondering what documents I submitted",
+                direction: 'Inbound',
+                unread: false,
+                timestamp: '2020-01-10 07:00:44',
+                hasimage: false,
+                isimage: false,
+                imgsrc: "",
+            },
+            {
+                id: 60,
+                message: "",
+                direction: 'Outbound',
+                unread: false,
+                timestamp: '2020-01-10 07:10:44',
+                hasimage: true,
+                isimage: true,
+                imgsrc: "https://www.ocregister.com/wp-content/uploads/2018/10/0418_nws_idb-l-allen-col-0418-1.jpg",
+            },
+            {
+                id: 70,
+                message: "We have this for your drivers license",
+                direction: 'Outbound',
+                unread: false,
+                timestamp: '2020-01-10 07:11:22',
+                hasimage: false,
+                isimage: false,
+                imgsrc: "",
+            },
+            {
+                id: 80,
+                message: "Do you have the papers I signed?",
+                direction: 'Inbound',
+                unread: false,
+                timestamp: '2020-01-10 07:18:44',
+                hasimage: false,
+                isimage: false,
+                imgsrc: "",
+            },
+            {
+                id: 90,
+                message: "There you go!",
+                direction: 'Outbound',
+                unread: false,
+                timestamp: '2020-01-10 07:19:44',
+                hasimage: true,
+                isimage: false,
+                imgsrc: "https://www.julienslive.com/images/lot/1962/196202_0.jpg",
+            },
+            {
+                id: 100,
+                message: "Thank you! 🙏 I really appreciate it a lot!",
+                direction: 'Inbound',
+                unread: true,
+                timestamp: '2020-01-10 07:21:44',
+                hasimage: false,
+                isimage: false,
+                imgsrc: "",
+            },
+            {
+                id: 110,
+                message: "Did I forget anything else??",
+                direction: 'Inbound',
+                unread: false,
+                timestamp: '2020-01-10 07:18:44',
+                hasimage: false,
+                isimage: false,
+                imgsrc: "",
+            },
+            {
+                id: 120,
+                message: "Nope we have everything we need, just waiting to hear from your insurance!",
+                direction: 'Outbound',
+                unread: false,
+                timestamp: '2020-01-10 07:19:44',
+                hasimage: false,
+                isimage: false,
+                imgsrc: "",
+            },
+            {
+                id: 130,
+                message: "Thank you again! Just let me know!",
+                direction: 'Inbound',
+                unread: true,
+                timestamp: '2020-01-10 07:21:44',
+                hasimage: false,
+                isimage: false,
+                imgsrc: "",
+            },
+
+        ]
         return{
             fullConversation,
+            placeholderConversation,
         }
     },
     updated(){
-        API.loadConversationData(this.currentConvo).then(res => {
-            if (res.success){
-                console.log('successfully retrieved result for', this.currentConvo);
-                this.fullConversation = res;
+        API.loadConversationData(this.phoneNumber, this.contactName).then(res => {
+            if (res.success === true){
+                console.log('successfully retrieved result for', this.currentConvo, this.phoneNumber);
+                if(this.fullConversation === res.convo){
+                    //do nothing
+                }else{
+                    this.fullConversation = res.convo;
+                    console.log('compare these two', this.fullConversation, res.convo);
+                }
+                console.log('res convo', res.convo);
             }else{
                 console.log('failed to receive result for', this.currentConvo);
-                //this.fullConversation = [];
+                this.fullConversation = this.placeholderConversation;
             }
         })
     },

@@ -133,13 +133,13 @@ export default {
     },
     showNewConversationModal(){
         swal({
-            text: 'Search for a contact by name or phone number',
+            text: 'Search for a contact by name or phone number to start a conversation',
             content: 'input',
             buttons: ['Cancel', 'Search!']
         }).then((value ) => {
             if (!value) throw null; 
             //swal(`Searching for ${value}`);
-            axios.get(`https://devl06.borugroup.com/post/query.php?module=Contacts&firstname=${value}`)
+            axios.post(`https://devl06.borugroup.com/post/query.php?module=Contacts&firstname=${value}`)
             .then(function(response){ 
                 console.log('response from fetch query', response);
                 if (response.status == 200 && response.body != 'NORECORD'){
