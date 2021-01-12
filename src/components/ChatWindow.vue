@@ -80,6 +80,7 @@
 <script>
 import API from '@/lib/API.js'
 import ChatMessage from './ChatMessage';
+import swal from 'sweetalert'
 export default {
     name: 'ChatWindow',
     components:{
@@ -204,12 +205,17 @@ export default {
     methods:{
         sendMessage(t){
             let b = document.getElementById('message-body').value;
-            console.log('triggering twilio api', t, b)
-            API.sendSMSMessage(t, b).then(res => {
-                if(res === true){
-                    document.getElementById('message-body').value = '';
-                }
-            });
+            let a = []; // need to fetch the array of images that are uploaded.
+            if(b != ''){
+                console.log('triggering twilio api', t, b)
+                API.sendSMSMessage(t, b, a).then(res => {
+                    if(res === true){
+                        document.getElementById('message-body').value = '';
+                    }
+                });
+            }else{
+                swal('Error', 'Please enter a message or provide an attachment!', 'error');
+            }
         }
     }
 }

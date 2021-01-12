@@ -23,11 +23,12 @@ export default {
     async VTLogin(info){
         return info
     },
-    async sendSMSMessage(to_number, message_body){
-        console.log('API: sending message', to_number, message_body)
+    async sendSMSMessage(to_number, message_body, attachment){
+        console.log('API: sending message', to_number, message_body);
         return axios.post('https://devl06.borugroup.com/cokere/twilio/send_sms.php', {
             to_number: to_number,
             message_body: message_body,
+            media_array: attachment,
         }).then(function(response){
             console.log('response from send_sms.php', response);
             if (response.status == 200 && response.data.success == true && response.data.message_sent != 'FF'){
@@ -38,6 +39,9 @@ export default {
                 swal('Error', 'Something went wrong! Please try again', 'error')
                 return false;
             }
+        }).catch(err => {
+            console.log(err);
+            swal('Error', `Something went wrong! Please try again\n${err}`, 'error')
         })
     }
 }

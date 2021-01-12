@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="new-conversation-section pb-2 pt-2 flex px-10">
-        <button class="text-white px-4 w-full h-12 bg-red-600 rounded-full ripple hover:bg-red-700 active:shadow mouse shadow-lg transition ease-in duration-200 focus:outline-none">
+        <button @click="showNewConversationModal" class="text-white px-4 w-full h-12 bg-red-600 rounded-full ripple hover:bg-red-700 active:shadow mouse shadow-lg transition ease-in duration-200 focus:outline-none">
           <svg class="w-6 h-6 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                 </svg>
@@ -100,6 +100,9 @@
 <script>
 import Conversations from './Conversations';
 import { ref } from 'vue';
+import swal from 'sweetalert';
+const axios = require('axios');
+
 export default {
     name: 'Sidebar',
     components:{
@@ -127,6 +130,30 @@ export default {
     },
     toggleDarkMode(){
         this.$emit('toggle-dark-mode');
+    },
+    showNewConversationModal(){
+        swal({
+            text: 'Search for a contact by name or phone number',
+            content: 'input',
+            buttons: ['Cancel', 'Search!']
+        }).then((value ) => {
+            if (!value) throw null; 
+            //swal(`Searching for ${value}`);
+            axios.get(`https://devl06.borugroup.com/post/query.php?module=Contacts&firstname=${value}`)
+            .then(function(response){ 
+                console.log('response from fetch query', response);
+                if (response.status == 200 && response.body != 'NORECORD'){
+                    //response.json();
+                    //swal('got someone')
+                }else{
+                    console.log('failed to get response');
+                    swal('Error', 'Something went wrong!', 'error')
+                }
+            }).catch(err => {
+                console.log(err);
+                swal('Error', `Something went wrong!\n${err}`, 'error')
+            })
+        })
     }
  }
 }
