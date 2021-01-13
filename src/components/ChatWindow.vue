@@ -381,7 +381,7 @@ export default {
             let b = document.getElementById('message-body').value;
             let a = this.uploadedFile ? this.uploadedFile : undefined ;
             
-            if(b != ''){
+            if(b != '' || a !== undefined){
                 console.log('triggering twilio api', t, b)
                 API.sendSMSMessage(t, b, a).then(res => {
                     if(res === true){
