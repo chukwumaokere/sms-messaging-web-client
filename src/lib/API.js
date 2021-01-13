@@ -36,6 +36,10 @@ export default {
     },
     async sendSMSMessage(to_number, message_body, attachment){
         console.log('API: sending message', to_number, message_body, attachment);
+        if (attachment === undefined){
+            attachment = [];
+        }
+        console.log('attachment is', attachment);
         return axios.post('https://devl06.borugroup.com/cokere/twilio/send_sms.php', {
             to_number: to_number,
             message_body: message_body,
