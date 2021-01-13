@@ -297,7 +297,7 @@ export default {
             },
 
         ]
-        let uploadedFile = ref('');
+        let uploadedFile = ref();
         let loading = ref(true);
 
         function loadConversation(){
@@ -379,13 +379,14 @@ export default {
     methods:{
         sendMessage(t){
             let b = document.getElementById('message-body').value;
-            let a = this.uploadedFile.value ? this.uploadedFile.value : '' ;
+            let a = this.uploadedFile ? this.uploadedFile : undefined ;
             
             if(b != ''){
                 console.log('triggering twilio api', t, b)
                 API.sendSMSMessage(t, b, a).then(res => {
                     if(res === true){
                         document.getElementById('message-body').value = '';
+                        this.uploadedFile = undefined;
                     }
                 });
             }else{
