@@ -3,7 +3,7 @@
     <Container class="h-full">
         <ChatWindow :currentConvo="currentConvo" :contactName="contact_name" :phoneNumber="phone_number" />
     </Container>
-    <Sidebar class="pt-5" :unreadCount="unreadcount" :conversations="conversations" @change-window="changeWindow" @change-conversation-type="changeConversations" @toggle-dark-mode="toggleDarkMode">
+    <Sidebar class="pt-5" :unreadCount="unreadcount" :conversations="conversations" @change-window="changeWindow" @change-conversation-type="changeConversations" @toggle-dark-mode="toggleDarkMode" @filter-list="filterList">
     </Sidebar>
   </div>
 </template>
@@ -234,7 +234,7 @@ export default {
       changeConversations(type){
           console.log('changing list of conversations to', type);
           if (type == 'All'){
-              console.log('init', this.initConversations);
+              //console.log('init', this.initConversations);
               this.conversations = this.initConversations;
           }
           if (type == "Unread"){
@@ -275,6 +275,21 @@ export default {
               console.log('switching theme to dark');
               localStorage.setItem('theme', 'dark');
               document.querySelector('html').classList.add('dark')
+          }
+      },
+      filterList(searchValue){
+          if (!searchValue || searchValue == ''){
+              this.conversations = this.initConversations;
+          }else{
+              //console.log('initconvos:', this.initConversations)
+              
+              this.conversations = [];
+              this.initConversations.forEach(conversation => {
+                  if (conversation.contact_name.toLowerCase().includes(searchValue) || conversation.phone_number.includes(searchValue) || conversation.last_message.toLowerCase().includes(searchValue) ){
+                      this.conversations.push(conversation);
+                  }
+              })
+              //console.log('conversations after search:', this.conversations);
           }
       }
   }

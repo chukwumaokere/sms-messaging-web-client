@@ -1,16 +1,25 @@
 <template>
   <div class="sidebar pb-20 flex flex-col max-h-full h-full w-96 bg-white text-black dark:bg-gray-700 dark:text-white shadow-xl">
-    <div class="messages-bar flex pb-5 px-10">
-        <div class="flex flex-row items-center"><p class="text-xl font-semibold">Messages</p> &nbsp; <div class="flex items-center justify-center ml-2 text-xs h-5 w-5 text-white bg-red-500 rounded-full font-medium">{{unreadCount}}</div></div>
+    <div class="messages-bar flex pb-2 px-10">
+        <div :class="{'hidden': searchOpen}" class="flex flex-row items-center pb-3"><p class="text-xl font-semibold">Messages</p> &nbsp; <div class="flex items-center justify-center ml-2 text-xs h-5 w-5 text-white bg-red-500 rounded-full font-medium">{{unreadCount}}</div></div>
+        <input
+                  type="text"
+                  :class="{'hidden': !searchOpen}"
+                  class="flex w-full mr-8 placeholder-gray-500 dark:placeholder-gray-400 bg-gray-300 dark:bg-gray-600 dark:border-transparent dark:focus:border-gray-800 dark:text-white border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 transition ease-in duration-200 focus:outline-none focus:shadow-outline focus:shadow-lg active:shadow-lg"
+                  placeholder="Search by name or phone number"
+                  id="search-box"
+                  v-model="searchValue"
+                  @keyup="updateSearchValue"
+                />
         <div class="w-6 float-right absolute right-8 ">
-            <button class="p-0 w-7 h-7 bg-transparent ripple rounded-lg object-cover mouse transition ease-in duration-200 focus:outline-none text-gray-400 hover:text-gray-700 dark:hover:text-white">
-                <!-- three dots icon
-                <svg class="w-6 h-6 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
-                </svg>
-                -->
+            <button v-if="!searchOpen" @click="openSearch" class="p-0 w-7 h-7 bg-transparent ripple rounded-lg object-cover mouse transition ease-in duration-200 focus:outline-none text-gray-400 hover:text-gray-700 dark:hover:text-white">
                 <svg class="w-6 h-6 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </button>
+            <button v-if="searchOpen" @click="openSearch" class="p-0 pt-2 w-7 h-7 bg-transparent ripple rounded-lg object-cover mouse transition ease-in duration-200 focus:outline-none text-gray-400 hover:text-gray-700 dark:hover:text-white">
+                <svg class="w-6 h-6 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
         </div>
@@ -114,48 +123,65 @@ export default {
     },
     setup(){
         let currentView = ref("All");
+        let searchValue = '';
+        let searchOpen = ref(false);
 
         return{
             currentView,
+            searchValue,
+            searchOpen,
         }
     },
     methods:{
-     changeWindow(v, c, p){
-        this.$emit("change-window", v, c, p);
-      },
-    changeConversations(type){
-        console.log('switching to', type);
-        this.currentView = type;
-        this.$emit('change-conversation-type', type);
-    },
-    toggleDarkMode(){
-        this.$emit('toggle-dark-mode');
-    },
-    showNewConversationModal(){
-        swal({
-            text: 'Search for a contact by name or phone number to start a conversation',
-            content: 'input',
-            buttons: ['Cancel', 'Search!']
-        }).then((value ) => {
-            if (!value) throw null; 
-            swal(`Searching for: ${value}`);
-            axios.get(`https://devl06.borugroup.com/cokere/post/query.php?entity=Contacts&firstname=${value}`)
-            .then(function(response){ 
-                console.log('response from fetch query', response);
-                if (response.status == 200 && response.data != 'NORECORD'){
-                    let record = response.data;
-                    swal('Success', `API Responded with: ${record.firstname} ${record.lastname} ${record.mobile}` , 'success')
-                }else{
-                    console.log('failed to get response');
-                    swal('Error', `Could not find a contact that matched: ${value}`, 'error')
-                }
-            }).catch(err => {
-                console.log(err);
-                swal('Error', `Something went wrong!\n${err}`, 'error')
+        changeWindow(v, c, p){
+            this.$emit("change-window", v, c, p);
+        },
+        changeConversations(type){
+            console.log('switching to', type);
+            this.currentView = type;
+            this.$emit('change-conversation-type', type);
+        },
+        toggleDarkMode(){
+            this.$emit('toggle-dark-mode');
+        },
+        showNewConversationModal(){
+            swal({
+                text: 'Search for a contact by name or phone number to start a conversation',
+                content: 'input',
+                buttons: ['Cancel', 'Search!']
+            }).then((value ) => {
+                if (!value) throw null; 
+                swal(`Searching for: ${value}`);
+                axios.get(`https://devl06.borugroup.com/cokere/post/query.php?entity=Contacts&firstname=${value}`)
+                .then(function(response){ 
+                    console.log('response from fetch query', response);
+                    if (response.status == 200 && response.data != 'NORECORD'){
+                        let record = response.data;
+                        swal('Success', `API Responded with: ${record.firstname} ${record.lastname} ${record.mobile}` , 'success')
+                    }else{
+                        console.log('failed to get response');
+                        swal('Error', `Could not find a contact that matched: ${value}`, 'error')
+                    }
+                }).catch(err => {
+                    console.log(err);
+                    swal('Error', `Something went wrong!\n${err}`, 'error')
+                })
             })
-        })
+        },
+        openSearch(){
+            //console.log('toggling search');
+            this.searchOpen = !this.searchOpen;
+            if(!this.searchOpen){
+                //console.log('search is closing')
+                this.searchValue = '';
+                this.$emit('filter-list', this.searchValue);
+            }
+        },
+        updateSearchValue(){
+            console.log('Searching for:', this.searchValue.toLowerCase());
+            this.$emit('filter-list', this.searchValue.toLowerCase());
+        }
     }
- }
 }
 </script>
 
