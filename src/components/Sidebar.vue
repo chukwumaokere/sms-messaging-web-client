@@ -178,7 +178,7 @@ export default {
             }
         },
         updateSearchValue(){
-            console.log('Searching for:', this.searchValue.toLowerCase());
+            //console.log('Searching for:', this.searchValue.toLowerCase());
             this.$emit('filter-list', this.searchValue.toLowerCase());
         }
     }
