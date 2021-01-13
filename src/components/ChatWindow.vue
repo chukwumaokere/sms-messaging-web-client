@@ -379,7 +379,8 @@ export default {
     methods:{
         sendMessage(t){
             let b = document.getElementById('message-body').value;
-            let a = []; // need to fetch the array of images that are uploaded.
+            let a = this.uploadedFile.value ? this.uploadedFile.value : '' ;
+            
             if(b != ''){
                 console.log('triggering twilio api', t, b)
                 API.sendSMSMessage(t, b, a).then(res => {
@@ -418,6 +419,7 @@ export default {
         handleFileUpload(){
             this.uploadedFile = this.$refs.file.files[0];
             console.log(this.uploadedFile);
+            //make this async then upload to server immediately using FileData and axiosPost and respond with fileUrl from VT Document record and then set this.uploadedFile to this URL
         },
         clearFile(){
             this.uploadedFile = undefined;
