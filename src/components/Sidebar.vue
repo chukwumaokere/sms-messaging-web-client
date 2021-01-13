@@ -138,16 +138,16 @@ export default {
             buttons: ['Cancel', 'Search!']
         }).then((value ) => {
             if (!value) throw null; 
-            //swal(`Searching for ${value}`);
-            axios.post(`https://devl06.borugroup.com/post/query.php?module=Contacts&firstname=${value}`)
+            swal(`Searching for: ${value}`);
+            axios.get(`https://devl06.borugroup.com/cokere/post/query.php?entity=Contacts&firstname=${value}`)
             .then(function(response){ 
                 console.log('response from fetch query', response);
-                if (response.status == 200 && response.body != 'NORECORD'){
-                    //response.json();
-                    //swal('got someone')
+                if (response.status == 200 && response.data != 'NORECORD'){
+                    let record = response.data;
+                    swal('Success', `API Responded with: ${record.firstname} ${record.lastname} ${record.mobile}` , 'success')
                 }else{
                     console.log('failed to get response');
-                    swal('Error', 'Something went wrong!', 'error')
+                    swal('Error', `Could not find a contact that matched: ${value}`, 'error')
                 }
             }).catch(err => {
                 console.log(err);
