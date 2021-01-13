@@ -72,7 +72,7 @@
             </li>
             <li>
                 <button 
-                    class="flex items-center">
+                    class="flex items-center focus:outline-none">
                     <span class="flex items-center focus:outline-none justify-center text-gray-400 hover:text-gray-700 dark:hover:text-indigo-100 dark:text-indigo-500 h-10 w-10 rounded-2xl transition ease-in">
                         <svg class="w-6 h-6"
                             fill="none"

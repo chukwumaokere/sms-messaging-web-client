@@ -23,17 +23,24 @@
                 style="height:0px; width:0px; overflow:hidden"
                 name="file"
                 type="file"
+                ref="file"
+                v-on:change="handleFileUpload()"
                 />
           <div class="relative w-full">
                 <input
                   type="text"
-                  class="flex pr-32 placeholder-gray-400 dark:placeholder-gray-200 dark:bg-gray-700 dark:border-transparent dark:focus:border-gray-800 dark:text-white w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 transition ease-in duration-200 focus:outline-none focus:shadow-outline focus:shadow-lg active:shaodw-lg"
+                  class="flex pr-36 placeholder-gray-400 dark:placeholder-gray-200 dark:bg-gray-700 dark:border-transparent dark:focus:border-gray-800 dark:text-white w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 transition ease-in duration-200 focus:outline-none focus:shadow-outline focus:shadow-lg active:shaodw-lg"
                   placeholder="Write something..."
                   id="message-body"
                   @keyup.enter="sendMessage(phoneNumber)"
                 />
                 <span>
-                    <small v-if="uploadedFile" class="absolute dark:text-white opacity-70 right-10 top-0 flex items-center justify-center h-full">File attached.</small>
+                    <button v-if="uploadedFile" @click="clearFile" class="absolute h-full w-5 right-28 mr-2 top-0 transition ease-in hover:opacity-100 focus:outline-none">
+                        <svg class="absolute h-full w-5 right-0 top-0 text-black dark:text-white opacity-50 dark:opacity-70 transition ease-in hover:opacity-100 focus:outline-none" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </button>
+                    <small v-if="uploadedFile" id="file-uploaded-text" class="absolute dark:text-white opacity-70 right-10 top-0 flex items-center justify-center h-full">File attached.</small>
                     <button @click="fileUpload()" class="absolute focus:outline-none flex items-center justify-center h-full w-12 right-0 top-0 transition ease-in text-gray-400 hover:text-gray-600 dark:hover:text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" :class="{'text-green-500 dark:text-green-500': uploadedFile}" class="h-6 w-6 transition ease-in text-gray-400 hover:text-gray-600 dark:text-gray-400 dark:hover:text-white">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
@@ -290,7 +297,7 @@ export default {
             },
 
         ]
-        let uploadedFile;
+        let uploadedFile = ref('');
         let loading = ref(true);
 
         function loadConversation(){
@@ -407,6 +414,13 @@ export default {
                     this.fullConversation = this.placeholderConversation;
                 }
             })
+        },
+        handleFileUpload(){
+            this.uploadedFile = this.$refs.file.files[0];
+            console.log(this.uploadedFile);
+        },
+        clearFile(){
+            this.uploadedFile = undefined;
         },
     },
 }
