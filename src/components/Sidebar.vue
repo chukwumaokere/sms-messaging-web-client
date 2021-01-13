@@ -165,10 +165,7 @@ export default {
         top: 0;
         left: 0;
         bottom: 0;
-        /* max-width: 350px; */
-        /* display: flex; */
         height: 100%;
-        /* width: 100%;*/
     }
         .scrollbar-w-2::-webkit-scrollbar {
         width: 0.55rem;

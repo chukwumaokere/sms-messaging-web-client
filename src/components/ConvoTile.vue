@@ -19,7 +19,6 @@
             </dl>
         </div>
         <div class="z-50 relative right-0 top-5 m-0 ping">
-            <!--<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>-->
             <span  v-if="readstatus" class="animate-ping absolute inline-flex rounded-full h-3 w-3 bg-red-400"></span>
             <span  v-if="readstatus" class="absolute inline-flex rounded-full h-3 w-3 bg-red-500"></span>
         </div>

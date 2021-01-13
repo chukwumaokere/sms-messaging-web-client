@@ -1,24 +1,6 @@
 const axios = require('axios');
 import swal from 'sweetalert';
 export default {
-    /*deprecated method
-    async loadConversationData(conversationid){
-        console.log('request received for', conversationid);
-        if (conversationid > 0){
-            let res = [];
-            console.log('retrieving data for', conversationid);
-            //fetch from twilio
-            if(res.ok == 200){
-                return {
-                    success: true,
-                }
-            }
-        }
-        return {
-            success: false,
-        }
-    },
-    */
     async loadConversationData(phoneNumber, contactName){
         console.log('API: requesting conversations for', phoneNumber);
         return axios.post('https://devl06.borugroup.com/cokere/twilio/fetch_message_history.php',{

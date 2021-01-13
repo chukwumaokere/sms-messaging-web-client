@@ -4,7 +4,6 @@
         <ChatWindow :currentConvo="currentConvo" :contactName="contact_name" :phoneNumber="phone_number" />
     </Container>
     <Sidebar class="pt-5" :unreadCount="unreadcount" :conversations="conversations" @change-window="changeWindow" @change-conversation-type="changeConversations" @toggle-dark-mode="toggleDarkMode">
-        <!-- <Conversations @change-window="changeWindow" :conversations="conversations" />-->
     </Sidebar>
   </div>
 </template>
@@ -22,7 +21,6 @@ export default {
   name: 'Home',
   components: {
     ChatWindow,
-    //Conversations,
     Container,
     Sidebar
   }, 
