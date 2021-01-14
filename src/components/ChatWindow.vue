@@ -448,7 +448,6 @@ export default {
         },
         clearFile(){
             this.uploadedFile = undefined;
-            //needs to clear handleFileUpload() / this.$refs.file
             this.$refs.file.value=null;
         },
     },
