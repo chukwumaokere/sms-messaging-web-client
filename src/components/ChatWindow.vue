@@ -442,7 +442,13 @@ export default {
                             this.uploadedFile = undefined;
                             console.log('failedToFetchURL from', reader.result, this.contact_id);
                             this.file_uploading = false;
+                            this.$refs.file.value=null;
                         }
+                    }).catch(err => {
+                        console.log('there was an error on the server side', err);
+                        this.uploadedFile = undefined;
+                        this.file_uploading = false;
+                        this.$refs.file.value=null;
                     })
                 }
             }
