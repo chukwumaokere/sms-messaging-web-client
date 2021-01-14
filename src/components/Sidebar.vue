@@ -152,7 +152,7 @@ export default {
             }).then((value ) => {
                 if (!value) throw null; 
                 swal(`Searching for: ${value}`);
-                axios.get(`https://devl06.borugroup.com/cokere/post/query.php?entity=Contacts&firstname=${value}`)
+                axios.get(`https://devl06.borugroup.com/cokere/post/query.php?entity=Contacts&firstname=${value}&lastname=${value}&mobile=${value}&phone=${value}`)
                 .then(function(response){ 
                     console.log('response from fetch query', response);
                     if (response.status == 200 && response.data != 'NORECORD'){
