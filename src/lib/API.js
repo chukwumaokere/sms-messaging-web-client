@@ -11,6 +11,7 @@ export default {
                 return {
                     success: true,
                     convo: response.data.data,
+                    contact_id: response.data.contact_id,
                 }
             }else{
                 console.log('Something failed!');
@@ -56,6 +57,30 @@ export default {
             }
         }).catch(err => {
             console.log(err);
+            swal('Error', `Something went wrong! Please try again\n${err}`, 'error')
+        })
+    },
+    async uploadImageAndFetchURL(record_id, base64image){
+        console.log('API: Sending Image to uploadPhoto endpoint', record_id, base64image);
+        return axios.post('https://devl06.borugroup.com/cokere/post/postPhotos.php', {
+            record_id: record_id,
+            base64Image: base64image,
+        }).then(function(response){
+            console.log('response from postPhoto.php', response);
+            if(response.status == 200 && response.data.success == true){
+                return {
+                    success: true,
+                    return_url: response.data.return_url
+                }
+            }else{
+                console.log("upload process failed ")
+                swal('Error', 'Something went wrong! Please try again', 'error')
+                return {
+                    success: false,
+                }
+            }
+        }).catch(err => {
+            console.log(err)
             swal('Error', `Something went wrong! Please try again\n${err}`, 'error')
         })
     }

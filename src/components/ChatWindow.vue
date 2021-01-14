@@ -41,9 +41,15 @@
                         </svg>
                     </button>
                     <small v-if="uploadedFile" id="file-uploaded-text" class="absolute dark:text-white opacity-70 right-10 top-0 flex items-center justify-center h-full">File attached.</small>
-                    <button @click="fileUpload()" class="absolute focus:outline-none flex items-center justify-center h-full w-12 right-0 top-0 transition ease-in text-gray-400 hover:text-gray-600 dark:hover:text-white">
+                    <button v-if="!file_uploading" @click="fileUpload()" class="absolute focus:outline-none flex items-center justify-center h-full w-12 right-0 top-0 transition ease-in text-gray-400 hover:text-gray-600 dark:hover:text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" :class="{'text-green-500 dark:text-green-500': uploadedFile}" class="h-6 w-6 transition ease-in text-gray-400 hover:text-gray-600 dark:text-gray-400 dark:hover:text-white">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
+                        </svg>
+                    </button>
+                    <button v-if="file_uploading" class="absolute focus:outline-none flex items-center justify-center h-full w-12 right-0 top-0 transition ease-in text-gray-400 hover:text-gray-600 dark:hover:text-white">
+                        <svg class="animate-spin h-full w-5 text-black dark:text-white " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
                     </button>
                 </span>
@@ -214,6 +220,7 @@ export default {
                 hasimage: false,
                 isimage: false,
                 imgsrc: "",
+                contact_id: 736,
             },
             {
                 id: 60,
@@ -223,6 +230,7 @@ export default {
                 timestamp: '2020-01-10 07:10:44',
                 hasimage: true,
                 isimage: true,
+                contact_id: 736,
                 imgsrc: "https://www.ocregister.com/wp-content/uploads/2018/10/0418_nws_idb-l-allen-col-0418-1.jpg",
             },
             {
@@ -234,6 +242,7 @@ export default {
                 hasimage: false,
                 isimage: false,
                 imgsrc: "",
+                contact_id: 736,
             },
             {
                 id: 80,
@@ -244,6 +253,7 @@ export default {
                 hasimage: false,
                 isimage: false,
                 imgsrc: "",
+                contact_id: 736,
             },
             {
                 id: 90,
@@ -254,6 +264,7 @@ export default {
                 hasimage: true,
                 isimage: false,
                 imgsrc: "https://www.julienslive.com/images/lot/1962/196202_0.jpg",
+                contact_id: 736,
             },
             {
                 id: 100,
@@ -264,6 +275,7 @@ export default {
                 hasimage: false,
                 isimage: false,
                 imgsrc: "",
+                contact_id: 736,
             },
             {
                 id: 110,
@@ -274,6 +286,7 @@ export default {
                 hasimage: false,
                 isimage: false,
                 imgsrc: "",
+                contact_id: 736,
             },
             {
                 id: 120,
@@ -284,6 +297,7 @@ export default {
                 hasimage: false,
                 isimage: false,
                 imgsrc: "",
+                contact_id: 736,
             },
             {
                 id: 130,
@@ -294,30 +308,36 @@ export default {
                 hasimage: false,
                 isimage: false,
                 imgsrc: "",
+                contact_id: 736,
             },
 
         ]
         let uploadedFile = ref();
         let loading = ref(true);
+        let contact_id = ref();
+        let file_uploading = ref(false);
 
         function loadConversation(){
             loading.value = true;
             API.loadConversationData(props.phoneNumber, props.contactName).then(res => {
-                if (res.success === true){
+                if (res && res.success === true){
                     console.log('successfully retrieved result for', props.currentConvo, props.phoneNumber);
                     if(fullConversation.value === res.convo){
+                        console.log('same conversation, no need to reload');
                         //do nothing
                         loading.value = false;
                     }else{
                         loading.value = false;
                         fullConversation.value = res.convo;
-                        console.log('compare these two', fullConversation.value, res.convo);
+                        contact_id.value = res.contact_id;
+                        //console.log('compare these two', fullConversation.value, res.convo);
                     }
                     //console.log('res convo', res.convo);
                 }else{
                     console.log('failed to receive result for', props.currentConvo);
                     fullConversation.value = placeholderConversation;
                     loading.value = false;
+                    contact_id = 1217;
                 }
             })
         }
@@ -368,6 +388,8 @@ export default {
             loadConversation,
             uploadedFile,
             loading,
+            contact_id,
+            file_uploading,
         }
     },
     updated(){
@@ -400,30 +422,34 @@ export default {
             console.log('initiating file upload');
             document.getElementById('file-upload').click();
         },
-        fetchConversation(){
-            API.loadConversationData(this.phoneNumber, this.contactName).then(res => {
-                if (res.success === true){
-                    console.log('successfully retrieved result for', this.currentConvo, this.phoneNumber);
-                    if(this.fullConversation === res.convo){
-                        //do nothing
-                    }else{
-                        this.fullConversation = res.convo;
-                        console.log('compare these two', this.fullConversation, res.convo);
-                    }
-                    console.log('res convo', res.convo);
-                }else{
-                    console.log('failed to receive result for', this.currentConvo);
-                    this.fullConversation = this.placeholderConversation;
-                }
-            })
-        },
         handleFileUpload(){
-            this.uploadedFile = this.$refs.file.files[0];
-            console.log(this.uploadedFile);
-            //make this async then upload to server immediately using FileData and axiosPost and respond with fileUrl from VT Document record and then set this.uploadedFile to this URL
+            this.file_uploading = true;
+            var reader = new FileReader();
+            let val = this.$refs.file.value;
+            let el = this.$refs.file.files[0];
+            if(val !== null){
+                reader.readAsDataURL(el);
+                reader.onload = () => {
+                    console.log(reader.result);
+                    API.uploadImageAndFetchURL(this.contact_id, reader.result).then(res => {
+                        if(res.success === true){
+                            let urlFromAPI = res.return_url;
+                            console.log('path of file is', urlFromAPI);
+                            this.uploadedFile = urlFromAPI;
+                            this.file_uploading = false;
+                        }else{
+                            this.uploadedFile = undefined;
+                            console.log('failedToFetchURL from', reader.result, this.contact_id);
+                            this.file_uploading = false;
+                        }
+                    })
+                }
+            }
         },
         clearFile(){
             this.uploadedFile = undefined;
+            //needs to clear handleFileUpload() / this.$refs.file
+            this.$refs.file.value=null;
         },
     },
 }
