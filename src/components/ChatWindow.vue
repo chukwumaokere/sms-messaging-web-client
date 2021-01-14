@@ -32,6 +32,7 @@
                   class="flex pr-36 placeholder-gray-400 dark:placeholder-gray-200 dark:bg-gray-700 dark:border-transparent dark:focus:border-gray-800 dark:text-white w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 transition ease-in duration-200 focus:outline-none focus:shadow-outline focus:shadow-lg active:shadow-lg"
                   placeholder="Write something..."
                   id="message-body"
+                  autocomplete="off"
                   @keyup.enter="sendMessage(phoneNumber)"
                 />
                 <span>
