@@ -12,5 +12,6 @@ Implement automatic sidebar reload and chatwindow reload (if from number = curen
 1) Create production Twilio account
 2) update API endpoint URLs in post/ and twilio/
 3) update URL apache configs
-4) update sms_incoming_message.php url to URL of update wbehook
-5) run app in screen. 
+4) Update API.js urls
+5) update sms_incoming_message.php url to URL of update wbehook
+6) run app in screen. 
