@@ -1,6 +1,7 @@
 const axios = require('axios');
 import swal from 'sweetalert';
 const endpoint_url = "https://devl06.borugroup.com/cokere/";
+
 export default {
     async loadConversationData(phoneNumber, contactName){
         console.log('API: requesting conversations for', phoneNumber);
