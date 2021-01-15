@@ -110,7 +110,7 @@
 import Conversations from './Conversations';
 import { ref } from 'vue';
 import swal from 'sweetalert';
-const axios = require('axios');
+import API from '@/lib/API.js'
 
 export default {
     name: 'Sidebar',
@@ -151,34 +151,7 @@ export default {
                 buttons: ['Cancel', 'Search!']
             }).then((value ) => {
                 if (!value) throw null; 
-                swal(`Searching for: ${value}`);
-                axios.get(`https://devl06.borugroup.com/cokere/post/query.php?entity=Contacts&firstname=${value}&lastname=${value}&mobile=${value}&phone=${value}`)
-                .then(function(response){ 
-                    console.log('response from fetch query', response);
-                    if (response.status == 200 && response.data != 'NORECORD'){
-                        let record = response.data;
-                        //swal('Success', `API Responded with: ${record.firstname} ${record.lastname} ${record.mobile}` , 'success')
-                        swal({
-                            title: "Success",
-                            icon: 'success',
-                            text: `Retrieved contact: ${record.firstname} ${record.lastname} ${record.mobile}\n Would you like to start a conversation with them?`,
-                            buttons: true,
-                        }).then((isConfirm) => {
-                            if(isConfirm){
-                                swal('Conversation initiated',`Starting conversation with ${record.firstname} ${record.lastname}...`, 'warning');
-                                //Need some api to start a new conversation.
-                            }else{
-                                swal('Conversation cancelled', `Just search again if you want to start a conversation!`, 'info');
-                            }
-                        })
-                    }else{
-                        console.log('failed to get response');
-                        swal('Error', `Could not find a contact that matched: ${value}`, 'error')
-                    }
-                }).catch(err => {
-                    console.log(err);
-                    swal('Error', `Something went wrong!\n${err}`, 'error')
-                })
+                API.fetchContactSearch(value);
             })
         },
         openSearch(){
