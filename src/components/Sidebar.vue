@@ -111,6 +111,7 @@ import Conversations from './Conversations';
 import { ref } from 'vue';
 import swal from 'sweetalert';
 import API from '@/lib/API.js'
+import { watch } from 'vue';
 
 export default {
     name: 'Sidebar',
@@ -120,11 +121,26 @@ export default {
     props: {
         unreadCount: [String, Number],
         conversations: Array,
+        reload: Boolean,
     },
-    setup(){
+    setup(props){
         let currentView = ref("All");
         let searchValue = '';
         let searchOpen = ref(false);
+        
+        /* might not be needed */
+        watch(() => props.reload, (newValue, oldValue) => {
+            console.log('conversations changed. reload', oldValue, newValue);
+            if(newValue == true){
+                loadConversations();
+            }
+        })
+        /* might not be needed */
+        
+       function loadConversations(){
+           console.log(props.reload); //placeholder to avoid error
+           //API.loadConversations();
+       }
 
         return{
             currentView,

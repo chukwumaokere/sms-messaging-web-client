@@ -116,6 +116,7 @@ export default {
         currentConvo: [Number, String],
         contactName: String,
         phoneNumber: String,
+        reload: Boolean,
     },
     setup(props){
         let fullConversation = ref([
@@ -318,8 +319,10 @@ export default {
         let contact_id = ref(undefined);
         let file_uploading = ref(false);
 
-        function loadConversation(){
-            loading.value = true;
+        function loadConversation(showLoading){
+            if(showLoading){
+                loading.value = true;
+            }
             API.loadConversationData(props.phoneNumber, props.contactName).then(res => {
                 if (res && res.success === true){
                     console.log('successfully retrieved result for', props.currentConvo, props.phoneNumber);
@@ -351,7 +354,7 @@ export default {
 
         onBeforeMount(() => {
             if(props.currentConvo > 0){
-                loadConversation();
+                loadConversation(true);
             }else{
                 loading.value = false;
             }
@@ -381,8 +384,17 @@ export default {
         
         watch(() => props.currentConvo, (newValue, oldValue) => {
             console.log('value switched to', oldValue, newValue);
-            loadConversation();
+            loadConversation(true);
         });
+
+        /* might not be needed
+        watch(() => props.reload, (newValue, oldValue) => {
+            console.log('new Chat incoming. reload', oldValue, newValue);
+            if(newValue == true){
+                loadConversation(false);
+            }
+        })
+        */
 
         return{
             fullConversation,

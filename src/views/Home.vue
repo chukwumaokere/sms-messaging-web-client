@@ -1,9 +1,9 @@
 <template>
   <div class="home h-full pl-96">
     <Container class="h-full">
-        <ChatWindow :currentConvo="currentConvo" :contactName="contact_name" :phoneNumber="phone_number" />
+        <ChatWindow :reload="reloadChatWindow" :currentConvo="currentConvo" :contactName="contact_name" :phoneNumber="phone_number" />
     </Container>
-    <Sidebar class="pt-5" :unreadCount="unreadcount" :conversations="conversations" @change-window="changeWindow" @change-conversation-type="changeConversations" @toggle-dark-mode="toggleDarkMode" @filter-list="filterList">
+    <Sidebar class="pt-5" :reload="reloadSidebar" :unreadCount="unreadcount" :conversations="conversations" @change-window="changeWindow" @change-conversation-type="changeConversations" @toggle-dark-mode="toggleDarkMode" @filter-list="filterList">
     </Sidebar>
   </div>
 </template>
@@ -198,6 +198,8 @@ export default {
     let contact_name = ref('Select a contact...');
     let phone_number = ref('No Phone Number');
     let params = Router.currentRoute.value.params;
+    let reloadSidebar = ref(false);
+    let reloadChatWindow = ref(false);
     
     currentConvo = params.conversationid ? params.conversationid : 0;
     if (currentConvo !== 0 ){
@@ -221,6 +223,18 @@ export default {
         localStorage.setItem('theme', '');
         console.log('setting theme to light in localstorage');
     }
+    
+    /* function to listen for webhook update
+        responseHandler 
+        if phoneNumber == phone_number.value
+            reloadSidebar.value = true;
+            reloadChatWindow.value = true;
+        else
+            reloadSidebar.value = true;
+        wait(2);
+        reloadSidebar.value = false;
+        reloadChatWindow.false;
+    */
     return{
         conversations,
         currentConvo,
@@ -228,6 +242,8 @@ export default {
         phone_number,
         unreadcount,
         initConversations,
+        reloadSidebar,
+        reloadChatWindow,
     }
   },
   methods:{ 
