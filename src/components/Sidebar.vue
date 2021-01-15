@@ -165,10 +165,10 @@ export default {
                             buttons: true,
                         }).then((isConfirm) => {
                             if(isConfirm){
-                                swal(`Starting conversation with ${record.firstname} ${record.lastname}`);
+                                swal('Conversation initiated',`Starting conversation with ${record.firstname} ${record.lastname}...`, 'warning');
                                 //Need some api to start a new conversation.
                             }else{
-                                swal(`No problem, just search again if you want to start a conversation!`);
+                                swal('Conversation cancelled', `Just search again if you want to start a conversation!`, 'info');
                             }
                         })
                     }else{
