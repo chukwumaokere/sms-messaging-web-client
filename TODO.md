@@ -6,6 +6,7 @@ When conversation has no message show some message to get people started.
 Modal when a photo is clicked to view photo in full
 Finish code here: https://gist.github.com/chukwumaokere/463317336735f0974f28677633453f8f
 Implement automatic sidebar reload and chatwindow reload (if from number = curent phoneNumber);
+Figure out how to save the numbers that were contacted: I think we should save them in localStorage? Just as an array/list of numbers. Then on load, we will fetch the conversations for each one API.loadConversations for each number to create a convo tile in sidebar. So each persons screen is different 
 
 
 # HOW TO SET UP:
