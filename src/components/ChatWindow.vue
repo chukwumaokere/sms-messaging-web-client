@@ -315,7 +315,7 @@ export default {
         ]
         let uploadedFile = ref();
         let loading = ref(true);
-        let contact_id = ref();
+        let contact_id = ref(undefined);
         let file_uploading = ref(false);
 
         function loadConversation(){
@@ -330,7 +330,7 @@ export default {
                     }else{
                         loading.value = false;
                         fullConversation.value = res.convo;
-                        contact_id.value = res.contact_id;
+                        contact_id.value = Number(res.contact_id);
                         //console.log('compare these two', fullConversation.value, res.convo);
                     }
                     //console.log('res convo', res.convo);
@@ -338,8 +338,9 @@ export default {
                     console.log('failed to receive result for', props.currentConvo);
                     fullConversation.value = placeholderConversation;
                     loading.value = false;
-                    contact_id = 1217;
+                    contact_id.value = Number(1217); //Fallback contact in Vtiger
                 }
+                //console.log('now contact id is', contact_id);
             })
         }
         
