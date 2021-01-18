@@ -116,16 +116,7 @@ export default {
         })
     },
     initSocketConnect(){
-        //console.log('socket',socket);
-        socket.on('connect', function(){
-            //console.log('i connected yo');
-            socket.emit('logged_in', `this dude connected ${socket.id}`);
-            
-            socket.on('update', (...args) => {
-                let incoming_update = args[0];
-                console.log(incoming_update);
-                return incoming_update;
-            })
-        })
+        console.log('connecting');
+        return socket;
     }
 }

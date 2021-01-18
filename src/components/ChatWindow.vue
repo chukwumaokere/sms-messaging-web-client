@@ -428,6 +428,7 @@ export default {
                     if(res === true){
                         document.getElementById('message-body').value = '';
                         this.uploadedFile = undefined;
+                        this.$emit('message-sent')
                     }
                 });
             }else{

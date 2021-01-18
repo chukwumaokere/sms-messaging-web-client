@@ -1,8 +1,8 @@
 <template>
   <div class="home h-full pl-96">
-    <!--<div @click="triggerReload"><p>for testing purposes only</p></div> -->
+    <!--<div @click="triggerFullReload"><p>for testing purposes only</p></div> -->
     <Container class="h-full">
-        <ChatWindow :reload="reloadChatWindow" :currentConvo="currentConvo" :contactName="contact_name" :phoneNumber="phone_number" />
+        <ChatWindow :reload="reloadChatWindow" :currentConvo="currentConvo" :contactName="contact_name" :phoneNumber="phone_number" @message-sent="messageSent" />
     </Container>
     <Sidebar class="pt-5" :reload="reloadSidebar" :unreadCount="unreadcount" :conversations="conversations" @change-window="changeWindow" @change-conversation-type="changeConversations" @toggle-dark-mode="toggleDarkMode" @filter-list="filterList">
     </Sidebar>
@@ -15,7 +15,7 @@
 import ChatWindow from '@/components/ChatWindow';
 import Sidebar from '@/components/Sidebar';
 import Container from '@/components/Container';
-import { ref, watch } from 'vue';
+import { ref /*, watch*/ } from 'vue';
 import Router from "@/router";
 import API from '@/lib/API.js'
 
@@ -203,7 +203,7 @@ export default {
     let params = Router.currentRoute.value.params;
     let reloadSidebar = ref(false);
     let reloadChatWindow = ref(false);
-    let incoming_update = ref();
+    //let incoming_update = ref();
     
     currentConvo = params.conversationid ? params.conversationid : 0;
     if (currentConvo !== 0 ){
@@ -228,24 +228,37 @@ export default {
         console.log('setting theme to light in localstorage');
     }
 
-    incoming_update.value = API.initSocketConnect();
-
-    watch(() => incoming_update, (newValue, oldValue) => {
-        console.log('incoming update', oldValue, newValue);
-        if(newValue){
-           if(newValue['type'] == 'incoming_sms' && newValue['update'] == true){
-              triggerReload();
-           }
-        }
+    let socket = API.initSocketConnect();
+    socket.on('connect', function(){
+        socket.emit('logged_in', `this dude connected ${socket.id}`);
+            socket.on('update', (...args) => {
+                let incoming_update = args[0];
+                //console.log('incoming update event', incoming_update);
+                let receivedPhoneNumber = "+" + incoming_update['phoneNumber'];
+                //console.log('comparing values', phone_number.value, receivedPhoneNumber, receivedPhoneNumber == phone_number.value);
+                if(incoming_update['type'] == 'incoming_sms' && incoming_update['update'] == true && phone_number.value == receivedPhoneNumber){
+                    triggerFullReload();
+                }
+                if(incoming_update['type'] == 'incoming_sms' && incoming_update['update'] == true){
+                    triggerSidebarReload();
+                }
+            }) 
     })
 
-    function triggerReload(){
-        console.log('doing the thing')
+
+    function triggerFullReload(){
         reloadChatWindow.value = true;
         reloadSidebar.value = true;
 
         setTimeout(() => {
             reloadChatWindow.value = false;
+            reloadSidebar.value = false;
+        }, 250)
+    }
+
+    function triggerSidebarReload(){
+        reloadSidebar.value = true;
+        setTimeout(() => {
             reloadSidebar.value = false;
         }, 250)
     }
@@ -259,7 +272,8 @@ export default {
         initConversations,
         reloadSidebar,
         reloadChatWindow,
-        triggerReload,
+        triggerFullReload,
+        triggerSidebarReload,
     }
   },
   methods:{ 
@@ -324,6 +338,9 @@ export default {
               //console.log('conversations after search:', this.conversations);
           }
       },
+      messageSent(){
+          this.triggerFullReload();
+      }
   }
 }
 </script>
