@@ -350,6 +350,11 @@ export default {
         function scrollToBottom(){
             let container = document.getElementById('messages');
             container.scrollTop = container.scrollHeight;
+
+            setTimeout(() => { //try again in 500 milliseconds if it doesnt work
+                let container = document.getElementById('messages');
+                container.scrollTop = container.scrollHeight;
+            }, 500);
         }
 
         onBeforeMount(() => {
@@ -387,14 +392,14 @@ export default {
             loadConversation(true);
         });
 
-        /* might not be needed
+        //might not be needed
         watch(() => props.reload, (newValue, oldValue) => {
             console.log('new Chat incoming. reload', oldValue, newValue);
             if(newValue == true){
                 loadConversation(false);
             }
         })
-        */
+        
 
         return{
             fullConversation,

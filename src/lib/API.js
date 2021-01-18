@@ -122,7 +122,9 @@ export default {
             socket.emit('logged_in', `this dude connected ${socket.id}`);
             
             socket.on('update', (...args) => {
-                console.log(args);
+                let incoming_update = args[0];
+                console.log(incoming_update);
+                return incoming_update;
             })
         })
     }

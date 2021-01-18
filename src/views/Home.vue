@@ -1,5 +1,6 @@
 <template>
   <div class="home h-full pl-96">
+    <!--<div @click="triggerReload"><p>for testing purposes only</p></div> -->
     <Container class="h-full">
         <ChatWindow :reload="reloadChatWindow" :currentConvo="currentConvo" :contactName="contact_name" :phoneNumber="phone_number" />
     </Container>
@@ -14,7 +15,7 @@
 import ChatWindow from '@/components/ChatWindow';
 import Sidebar from '@/components/Sidebar';
 import Container from '@/components/Container';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import Router from "@/router";
 import API from '@/lib/API.js'
 
@@ -202,6 +203,7 @@ export default {
     let params = Router.currentRoute.value.params;
     let reloadSidebar = ref(false);
     let reloadChatWindow = ref(false);
+    let incoming_update = ref();
     
     currentConvo = params.conversationid ? params.conversationid : 0;
     if (currentConvo !== 0 ){
@@ -226,20 +228,27 @@ export default {
         console.log('setting theme to light in localstorage');
     }
 
-    API.initSocketConnect();
-    
-   // API.initFirebase();
-    /* function to listen for webhook update
-        responseHandler 
-        if phoneNumber == phone_number.value
-            reloadSidebar.value = true;
-            reloadChatWindow.value = true;
-        else
-            reloadSidebar.value = true;
-        wait(2);
-        reloadSidebar.value = false;
-        reloadChatWindow.false;
-    */
+    incoming_update.value = API.initSocketConnect();
+
+    watch(() => incoming_update, (newValue, oldValue) => {
+        console.log('incoming update', oldValue, newValue);
+        if(newValue){
+           if(newValue['type'] == 'incoming_sms' && newValue['update'] == true){
+              triggerReload();
+           }
+        }
+    })
+
+    function triggerReload(){
+        console.log('doing the thing')
+        reloadChatWindow.value = true;
+        reloadSidebar.value = true;
+
+        setTimeout(() => {
+            reloadChatWindow.value = false;
+            reloadSidebar.value = false;
+        }, 250)
+    }
 
     return{
         conversations,
@@ -250,6 +259,7 @@ export default {
         initConversations,
         reloadSidebar,
         reloadChatWindow,
+        triggerReload,
     }
   },
   methods:{ 
