@@ -16,6 +16,8 @@ import Sidebar from '@/components/Sidebar';
 import Container from '@/components/Container';
 import { ref } from 'vue';
 import Router from "@/router";
+import API from '@/lib/API.js'
+
 
 export default {
   name: 'Home',
@@ -223,7 +225,10 @@ export default {
         localStorage.setItem('theme', '');
         console.log('setting theme to light in localstorage');
     }
+
+    API.initSocketConnect();
     
+   // API.initFirebase();
     /* function to listen for webhook update
         responseHandler 
         if phoneNumber == phone_number.value
@@ -235,6 +240,7 @@ export default {
         reloadSidebar.value = false;
         reloadChatWindow.false;
     */
+
     return{
         conversations,
         currentConvo,
@@ -307,7 +313,7 @@ export default {
               })
               //console.log('conversations after search:', this.conversations);
           }
-      }
+      },
   }
 }
 </script>

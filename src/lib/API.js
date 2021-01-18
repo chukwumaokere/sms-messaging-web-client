@@ -1,7 +1,13 @@
 const axios = require('axios');
 import swal from 'sweetalert';
 const endpoint_url = "https://devl06.borugroup.com/cokere/";
-
+import { io } from 'socket.io-client';
+const socket = io('http://localhost:8081', {transports: ['websocket']});
+/*
+import firebaseConfig from './Credentials';
+import firebase from 'firebase/app';
+import 'firebase/messaging';
+*/
 export default {
     async loadConversationData(phoneNumber, contactName){
         console.log('API: requesting conversations for', phoneNumber);
@@ -112,5 +118,35 @@ export default {
             console.log(err);
             swal('Error', `Something went wrong!\n${err}`, 'error')
         })
+    },
+    initSocketConnect(){
+        //console.log('socket',socket);
+        socket.on('connect', function(){
+            //console.log('i connected yo');
+            socket.emit('logged_in', `this dude connected ${socket.id}`);
+            
+            socket.on('update', (...args) => {
+                console.log(args);
+            })
+        })
     }
+    /*
+    initFirebase(){
+        const firebaseApp = firebase.initializeApp(firebaseConfig);
+        console.log(firebaseApp);
+        const messaging = firebaseApp.messaging();
+        messaging.requestPermission().then(function() {
+            console.log('have permission');
+            return messaging.getToken();
+        }).then((token) =>{ 
+            console.log('token', token)
+        }).catch((err) => {
+            console.log("No permission", err)
+        });
+        console.log('messaging', messaging);
+        messaging.onMessage((payload) => {
+            console.log('Message received', payload);
+        })
+    },
+    */
 }
