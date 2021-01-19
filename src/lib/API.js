@@ -16,6 +16,7 @@ export default {
                     success: true,
                     convo: response.data.data,
                     contact_id: response.data.contact_id,
+                    picture: response.data.picture,
                 }
             }else{
                 console.log('Something failed!');

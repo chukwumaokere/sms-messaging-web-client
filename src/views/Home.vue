@@ -231,6 +231,8 @@ export default {
         reloadChatWindow.value = true;
         reloadSidebar.value = true;
 
+        triggerSidebarReload();
+
         setTimeout(() => {
             reloadChatWindow.value = false;
             reloadSidebar.value = false;
@@ -258,8 +260,9 @@ export default {
             console.log('There are no saved conversaitons')
         }
     }
-
-    /* This goes above
+    
+    /* This goes above */
+    /*
     if (currentConvo !== 0 ){
         let obj = conversations.value.find(conv => conv.conversationid == currentConvo );
         //console.log(obj);

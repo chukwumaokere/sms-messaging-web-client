@@ -15,7 +15,7 @@
           </div>          
       </div>
       <div v-if="fullConversation.length > 0" id="messages" class="px-10 pt-5 chat-area pb-15 overflow-y-auto max-h-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
-          <ChatMessage v-for="message in fullConversation" :key="message.id" :message="message" />
+          <ChatMessage v-for="message in fullConversation" :key="message.id" :message="message" :picture="picture" />
       </div>
       
       <div v-else class="m bg-gray-300 dark:bg-gray-600 dark:text-white text-black dark:bg-gray-300 dark:text-black w-full relative" >
@@ -114,6 +114,7 @@ import { ref, onUpdated, onMounted, onBeforeUpdate, onBeforeMount, watch } from 
 
 export default {
     name: 'ChatWindow',
+    emits: ['message-sent'],
     components:{
         ChatMessage,
         ChatSkeleton,
@@ -233,6 +234,7 @@ export default {
         let loading = ref(true);
         let contact_id = ref(undefined);
         let file_uploading = ref(false);
+        let picture = ref('');
 
         function loadConversation(showLoading){
             if(showLoading){
@@ -249,6 +251,7 @@ export default {
                         loading.value = false;
                         fullConversation.value = res.convo;
                         contact_id.value = Number(res.contact_id);
+                        picture.value = res.picture;
                         //console.log('compare these two', fullConversation.value, res.convo);
                     }
                     //console.log('res convo', res.convo);
@@ -286,7 +289,8 @@ export default {
             try{ 
                 scrollToBottom();
             }catch(err){
-                console.log(err);
+                //console.log(err);
+                return err;
             }
         });
 
@@ -295,7 +299,8 @@ export default {
             try{ 
                 scrollToBottom();
             }catch(err){
-                console.log(err);
+                //console.log(err);
+                return err;
             }
         });
 
@@ -325,6 +330,7 @@ export default {
             loading,
             contact_id,
             file_uploading,
+            picture,
         }
     },
     updated(){
