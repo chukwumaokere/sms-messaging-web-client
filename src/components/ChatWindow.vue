@@ -278,14 +278,15 @@ export default {
 
         onBeforeMount(() => {
             if(props.currentConvo > 0){
-                loadConversation(true);
+                console.log('from onBeforeMount', props.currentConvo, props.phoneNumber);
+                //loadConversation(true);
             }else{
                 loading.value = false;
             }
         });
 
         onMounted(() => {
-            console.log('mounted');
+            console.log('mounted', props.phoneNumber);
             try{ 
                 scrollToBottom();
             }catch(err){
@@ -308,9 +309,18 @@ export default {
             console.log('before update');
         });
         
+        /*
         watch(() => props.currentConvo, (newValue, oldValue) => {
             console.log('value switched to', oldValue, newValue);
             loadConversation(true);
+        });
+        */
+       
+        watch(() => props.phoneNumber, (newValue, oldValue) => {
+            console.log('value switched to', oldValue, newValue);
+            if(props.phoneNumber !== 'No Phone Number'){
+                loadConversation(true);
+            }
         });
 
         //might not be needed

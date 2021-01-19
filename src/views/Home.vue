@@ -28,8 +28,7 @@ export default {
     Sidebar
   }, 
   setup(){
-    let conversations = ref([
-    ]);
+    let conversations = ref([]);
     /*DEMO DATA
     {
             conversationid: 1,
@@ -183,8 +182,8 @@ export default {
         },
         */
     let initConversations = ref([]);
-    let unreadcount = 0;
-    let currentConvo = 0;
+    let unreadcount = ref(0);
+    let currentConvo = ref(0);
     let contact_name = ref('Select a contact...');
     let phone_number = ref('No Phone Number');
     let params = Router.currentRoute.value.params;
@@ -192,7 +191,7 @@ export default {
     let reloadChatWindow = ref(false);
     let conversation_list = ref([]);
     
-    currentConvo = params.conversationid ? params.conversationid : 0;
+    currentConvo.value = params.conversationid ? params.conversationid : 0;
     
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -250,10 +249,21 @@ export default {
                     console.log('got some conversation records', res['conversations']);
                     conversations.value = res['conversations'];  
                     initConversations.value = res['conversations'];  
-                    console.log('conversations are', conversations);
-                    console.log('init conversations are', initConversations);
+                    //console.log('conversations are', conversations);
+                    //console.log('init conversations are', initConversations);
 
                     /*Somewhere in here above*/
+                    if (currentConvo.value !== 0 ){
+                        let obj = conversations.value.find(conv => conv.conversationid == currentConvo.value );
+                        //console.log(obj);
+                        contact_name.value = obj.contact_name;
+                        phone_number.value = obj.phone_number;
+                    } 
+                    conversations.value.forEach(conversation => {
+                        if(conversation.unread === true){
+                            unreadcount.value++;
+                        }
+                    })
                 }
             })
         }else{
@@ -263,7 +273,7 @@ export default {
     
     /* This goes above */
     /*
-    if (currentConvo !== 0 ){
+    if (currentConvo.value !== 0 ){
         let obj = conversations.value.find(conv => conv.conversationid == currentConvo );
         //console.log(obj);
         contact_name.value = obj.contact_name;
@@ -271,7 +281,7 @@ export default {
     } 
     conversations.value.forEach(conversation => {
         if(conversation.unread === true){
-            unreadcount++;
+            unreadcount.value++;
         }
     })
     */
