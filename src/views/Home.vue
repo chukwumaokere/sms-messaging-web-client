@@ -291,7 +291,7 @@ export default {
       changeConversations(type){
           console.log('changing list of conversations to', type);
           if (type == 'All'){
-              console.log('init', this.initConversations);
+              //console.log('init', this.initConversations);
               this.conversations = this.initConversations;
           }
           if (type == "Unread"){
