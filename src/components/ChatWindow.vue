@@ -14,9 +14,16 @@
             </div>
           </div>          
       </div>
-      <div id="messages" class="px-10 pt-5 chat-area pb-15 overflow-y-auto max-h-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+      <div v-if="fullConversation.length > 0" id="messages" class="px-10 pt-5 chat-area pb-15 overflow-y-auto max-h-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
           <ChatMessage v-for="message in fullConversation" :key="message.id" :message="message" />
       </div>
+      
+      <div v-else class="m bg-gray-300 dark:bg-gray-600 dark:text-white text-black dark:bg-gray-300 dark:text-black w-full relative" >
+        <div class="select-a-convo p-10 flex justify-center h-full">
+            <h1 class="animate-bounce place-self-center text-2xl">👇 Send a message below to start chatting with {{contactName}}!</h1>
+        </div>
+      </div>
+      
       <div class="input-section px-10 pr-16 w-full bottom-0 absolute pb-10 flex " style="width: inherit">
           <input
                 id="file-upload"
@@ -119,99 +126,7 @@ export default {
         reload: Boolean,
     },
     setup(props){
-        let fullConversation = ref([
-            {
-                id: 50,
-                message: "I was wondering what documents I submitted",
-                direction: 'Inbound',
-                unread: false,
-                timestamp: '2020-01-10 07:00:44',
-                hasimage: false,
-                isimage: false,
-                imgsrc: "",
-            },
-            {
-                id: 60,
-                message: "",
-                direction: 'Outbound',
-                unread: false,
-                timestamp: '2020-01-10 07:10:44',
-                hasimage: true,
-                isimage: true,
-                imgsrc: "https://www.ocregister.com/wp-content/uploads/2018/10/0418_nws_idb-l-allen-col-0418-1.jpg",
-            },
-            {
-                id: 70,
-                message: "We have this for your drivers license",
-                direction: 'Outbound',
-                unread: false,
-                timestamp: '2020-01-10 07:11:22',
-                hasimage: false,
-                isimage: false,
-                imgsrc: "",
-            },
-            {
-                id: 80,
-                message: "Do you have the papers I signed?",
-                direction: 'Inbound',
-                unread: false,
-                timestamp: '2020-01-10 07:18:44',
-                hasimage: false,
-                isimage: false,
-                imgsrc: "",
-            },
-            {
-                id: 90,
-                message: "There you go!",
-                direction: 'Outbound',
-                unread: false,
-                timestamp: '2020-01-10 07:19:44',
-                hasimage: true,
-                isimage: false,
-                imgsrc: "https://www.julienslive.com/images/lot/1962/196202_0.jpg",
-            },
-            {
-                id: 100,
-                message: "Thank you! 🙏 I really appreciate it a lot!",
-                direction: 'Inbound',
-                unread: true,
-                timestamp: '2020-01-10 07:21:44',
-                hasimage: false,
-                isimage: false,
-                imgsrc: "",
-            },
-            {
-                id: 110,
-                message: "Did I forget anything else??",
-                direction: 'Inbound',
-                unread: false,
-                timestamp: '2020-01-10 07:18:44',
-                hasimage: false,
-                isimage: false,
-                imgsrc: "",
-            },
-            {
-                id: 120,
-                message: "Nope we have everything we need, just waiting to hear from your insurance!",
-                direction: 'Outbound',
-                unread: false,
-                timestamp: '2020-01-10 07:19:44',
-                hasimage: false,
-                isimage: false,
-                imgsrc: "",
-            },
-            {
-                id: 130,
-                message: "Thank you again! Just let me know!",
-                direction: 'Inbound',
-                unread: true,
-                timestamp: '2020-01-10 07:21:44',
-                hasimage: false,
-                isimage: false,
-                imgsrc: "",
-            },
-
-        ]);
+        let fullConversation = ref([]);
         let placeholderConversation = [
             {
                 id: 50,
@@ -339,7 +254,8 @@ export default {
                     //console.log('res convo', res.convo);
                 }else{
                     console.log('failed to receive result for', props.currentConvo);
-                    fullConversation.value = placeholderConversation;
+                    //fullConversation.value = placeholderConversation;
+                    fullConversation.value = [];
                     loading.value = false;
                     contact_id.value = Number(1217); //Fallback contact in Vtiger
                 }
@@ -428,7 +344,7 @@ export default {
                     if(res === true){
                         document.getElementById('message-body').value = '';
                         this.uploadedFile = undefined;
-                        this.$emit('message-sent')
+                        this.$emit('message-sent', true)
                     }
                 });
             }else{

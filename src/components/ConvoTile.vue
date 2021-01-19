@@ -1,7 +1,7 @@
 <template>
 <a :href="href" @click="changeChat(conversation.conversationid, conversation.contact_name, conversation.phone_number)" >
   <article class="p-4 px-10 flex space-x-4 transition ease-in hover:bg-gray-100 dark:hover:bg-gray-500" :class="{'bg-gray-200 dark:bg-gray-800': isActive }" style="width: inherit;">
-        <img :src="conversation.picture" class="flex-none w-12 h-12 rounded-lg object-cover" width="144" height="144" >
+        <img :src="conversation.picture ? conversation.picture : 'https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png'" class="flex-none w-12 h-12 rounded-lg object-cover" width="144" height="144" >
         <div class="min-w-0 relative flex-auto sm:pr-10 lg:pr-0 xl:pr-10">
             <h2 class="text-md font-semibold text-black dark:text-white mb-0.5">
                 {{ conversation.contact_name }}

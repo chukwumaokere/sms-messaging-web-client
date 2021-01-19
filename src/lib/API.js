@@ -100,8 +100,24 @@ export default {
                     buttons: true,
                 }).then((isConfirm) => {
                     if(isConfirm){
-                        swal('Conversation initiated',`Starting conversation with ${record.firstname} ${record.lastname}...`, 'warning');
-                        //Need some api to start a new conversation.
+                        //Need some api to start a new conversation tile.
+                        swal('Conversation initiated',`Starting conversation with ${record.firstname} ${record.lastname}...`, 'warning', {timer: 1300});
+                        if(localStorage['conversation_list']){
+                            let previous_list = JSON.parse(localStorage['conversation_list'] || []);
+                            let found = previous_list.some(el => el.contact_number == record.mobile);
+                            if (!found){
+                                previous_list.push({contact_number: record.mobile});
+                                localStorage.setItem('conversation_list', JSON.stringify(previous_list));
+                            }else{
+                                //console.log('Already found in array, no need to readd')
+                            }
+                            //console.log('Debug: ', JSON.parse(localStorage['conversation_list']));
+                        }else{
+                            let start_new_list = new Array();
+                            start_new_list[0] = {contact_number: record.mobile};
+                            localStorage.setItem('conversation_list', JSON.stringify(start_new_list));
+                        }
+                        
                     }else{
                         swal('Conversation cancelled', `Just search again if you want to start a conversation!`, 'info');
                     }
@@ -118,5 +134,28 @@ export default {
     initSocketConnect(){
         console.log('connecting');
         return socket;
+    },
+    async loadConversations(numbers){
+        console.log('API: loading sidebar conversations', numbers);
+        return axios.post(endpoint_url + 'twilio/fetch_sidebar_message_history.php', {
+            numbers: numbers,
+        }).then(function(response){
+            console.log('response from fetch_sidebar_message_history.php:', response);
+            if(response.status == 200 && response.data.success == true && response.data.data.length > 0){
+                return {
+                    success: true,
+                    conversations: response.data.data,
+                }
+            }else{
+                console.log('Something failed!');
+                swal('Error', `Something went wrong when trying to fetch conversations. Please try refreshing`, 'error')
+                return {
+                    success: false,
+                };
+            }
+        }).catch(err => {
+            console.log(err);
+            swal('Error', `Something went wrong! Please try again\n${err}`, 'error')
+        })
     }
 }

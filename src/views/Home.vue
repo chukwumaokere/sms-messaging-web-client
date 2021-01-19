@@ -29,9 +29,10 @@ export default {
   }, 
   setup(){
     let conversations = ref([
-        {
+    ]);
+    /*DEMO DATA
+    {
             conversationid: 1,
-            /*last_message_sent: '2021-01-09 08:20:33', */
             last_message_sent: "2 min",
             last_message: "Thank you! 🙏 I really appreciate it a lot!",
             direction: "Inbound",
@@ -42,7 +43,6 @@ export default {
         },
         {
             conversationid: 2,
-            /* last_message_sent: '2021-01-08 08:20:33', */
             last_message_sent: "12:35 PM",
             last_message: "Glad to help!",
             direction: "Outbound",
@@ -53,7 +53,6 @@ export default {
         },
         {
             conversationid: 3,
-            /*last_message_sent: '2021-01-01 08:20:33',*/
             last_message_sent: 'Wed',
             last_message: "No problem! 😀",
             direction: "Outbound",
@@ -64,7 +63,6 @@ export default {
         },
         {
             conversationid: 4,
-            /* last_message_sent: '2020-11-01 08:20:33', */
             last_message_sent: " Nov 1",
             last_message: "Okay",
             direction: "Inbound",
@@ -75,7 +73,6 @@ export default {
         },
         {
             conversationid: 5,
-            /* last_message_sent: '2020-11-01 08:20:33', */
             last_message_sent: "Oct 31",
             last_message: "Thanks for the info!",
             direction: "Inbound",
@@ -86,7 +83,6 @@ export default {
         },
         {
             conversationid: 6,
-            /*last_message_sent: '2021-01-09 08:20:33', */
             last_message_sent: "Oct 15",
             last_message: "Thank you!",
             direction: "Inbound",
@@ -97,7 +93,6 @@ export default {
         },
         {
             conversationid: 7,
-            /* last_message_sent: '2021-01-08 08:20:33', */
             last_message_sent: "Oct 15",
             last_message: "Glad to help!",
             direction: "Outbound",
@@ -108,7 +103,6 @@ export default {
         },
         {
             conversationid: 8,
-            /*last_message_sent: '2021-01-01 08:20:33',*/
             last_message_sent: 'Oct 10',
             last_message: "✅",
             direction: "Outbound",
@@ -119,7 +113,6 @@ export default {
         },
         {
             conversationid: 9,
-            /* last_message_sent: '2020-11-01 08:20:33', */
             last_message_sent: "Oct 5",
             last_message: "Okay",
             direction: "Inbound",
@@ -130,72 +123,66 @@ export default {
         },
         {
             conversationid: 10,
-            /* last_message_sent: '2020-11-01 08:20:33', */
             last_message_sent: "Oct 4",
             last_message: "Thanks for the info!",
             direction: "Inbound",
             unread: false,
             contact_name: "Will Smith",
             phone_number: '+17733072548',
-            picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
+            picture: "",
         },
         {
             conversationid: 11,
-            /*last_message_sent: '2021-01-09 08:20:33', */
             last_message_sent: "Oct 3",
             last_message: "Thank you! 🙏",
             direction: "Inbound",
             unread: false,
             contact_name: "Chris Rock",
             phone_number: '+17733072548',
-            picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
+            picture: "",
         },
         {
             conversationid: 12,
-            /* last_message_sent: '2021-01-08 08:20:33', */
             last_message_sent: "Sep 31",
             last_message: "Glad to help!",
             direction: "Outbound",
             unread: false,
             contact_name: "Kat Williams",
             phone_number: '+17733072548',
-            picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
+            picture: "",
         },
         {
             conversationid: 13,
-            /*last_message_sent: '2021-01-01 08:20:33',*/
             last_message_sent: 'Sep 31',
             last_message: "No problem! 😀",
             direction: "Outbound",
             unread: false,
             contact_name: "Dave Chappelle",
             phone_number: '+17733072548',
-            picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
+            picture: "",
         },
         {
             conversationid: 14,
-            /* last_message_sent: '2020-11-01 08:20:33', */
             last_message_sent: "Sep 30",
             last_message: "Okay",
             direction: "Inbound",
             unread: false,
             contact_name: "Kevin Hart",
             phone_number: '+17733072548',
-            picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
+            picture: "",
         },
         {
             conversationid: 15,
-            /* last_message_sent: '2020-11-01 08:20:33', */
             last_message_sent: "Sep 1",
             last_message: "Thanks for the info! LAST MESSAGE LAST MESSAGE LAST MESSAGE LAST MESSAGE LAST MESSAGE LAST MESSAGE",
             direction: "Inbound",
             unread: false,
             contact_name: "David O'Doherty",
             phone_number: '+12345678901',
-            picture: "https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png",
+            picture: "",
         },
-    ]);
-    let initConversations = conversations.value;
+        */
+    let initConversations = ref([]);
     let unreadcount = 0;
     let currentConvo = 0;
     let contact_name = ref('Select a contact...');
@@ -203,20 +190,10 @@ export default {
     let params = Router.currentRoute.value.params;
     let reloadSidebar = ref(false);
     let reloadChatWindow = ref(false);
-    //let incoming_update = ref();
+    let conversation_list = ref([]);
     
     currentConvo = params.conversationid ? params.conversationid : 0;
-    if (currentConvo !== 0 ){
-        let obj = conversations.value.find(conv => conv.conversationid == currentConvo );
-        //console.log(obj);
-        contact_name.value = obj.contact_name;
-        phone_number.value = obj.phone_number;
-    } 
-    conversations.value.forEach(conversation => {
-        if(conversation.unread === true){
-            unreadcount++;
-        }
-    })
+    
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.querySelector('html').classList.add('dark')
@@ -245,6 +222,10 @@ export default {
             }) 
     })
 
+    if(localStorage['conversation_list']){
+        conversation_list.value = JSON.parse(localStorage['conversation_list'] || []);
+        triggerSidebarReload();
+    }
 
     function triggerFullReload(){
         reloadChatWindow.value = true;
@@ -261,7 +242,36 @@ export default {
         setTimeout(() => {
             reloadSidebar.value = false;
         }, 250)
+        if(conversation_list.value.length > 0){
+            API.loadConversations(conversation_list.value).then(res => {
+                if(res['success'] === true && res.conversations){
+                    console.log('got some conversation records', res['conversations']);
+                    conversations.value = res['conversations'];  
+                    initConversations.value = res['conversations'];  
+                    console.log('conversations are', conversations);
+                    console.log('init conversations are', initConversations);
+
+                    /*Somewhere in here above*/
+                }
+            })
+        }else{
+            console.log('There are no saved conversaitons')
+        }
     }
+
+    /* This goes above
+    if (currentConvo !== 0 ){
+        let obj = conversations.value.find(conv => conv.conversationid == currentConvo );
+        //console.log(obj);
+        contact_name.value = obj.contact_name;
+        phone_number.value = obj.phone_number;
+    } 
+    conversations.value.forEach(conversation => {
+        if(conversation.unread === true){
+            unreadcount++;
+        }
+    })
+    */
 
     return{
         conversations,
@@ -274,13 +284,14 @@ export default {
         reloadChatWindow,
         triggerFullReload,
         triggerSidebarReload,
+        conversation_list,
     }
   },
   methods:{ 
       changeConversations(type){
           console.log('changing list of conversations to', type);
           if (type == 'All'){
-              //console.log('init', this.initConversations);
+              console.log('init', this.initConversations);
               this.conversations = this.initConversations;
           }
           if (type == "Unread"){
@@ -340,7 +351,7 @@ export default {
       },
       messageSent(){
           this.triggerFullReload();
-      }
+      },
   }
 }
 </script>

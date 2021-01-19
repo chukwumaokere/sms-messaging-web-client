@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar pb-20 flex flex-col max-h-full h-full w-96 bg-white text-black dark:bg-gray-700 dark:text-white shadow-xl">
     <div class="messages-bar flex pb-2 px-10">
-        <div :class="{'hidden': searchOpen}" class="flex flex-row items-center pb-3"><p class="text-xl font-semibold">Messages</p> &nbsp; <div class="flex items-center justify-center ml-2 text-xs h-5 w-5 text-white bg-red-500 rounded-full font-medium">{{unreadCount}}</div></div>
+        <div :class="{'hidden': searchOpen}" class="flex flex-row items-center pb-3"><p class="text-xl font-semibold">Messages</p> &nbsp; <div v-if="unreadCount > 0" class="flex items-center justify-center ml-2 text-xs h-5 w-5 text-white bg-red-500 rounded-full font-medium">{{unreadCount}}</div></div>
         <input
                   type="text"
                   :class="{'hidden': !searchOpen}"
@@ -27,8 +27,8 @@
     <div class="new-conversation-section pb-2 pt-2 flex px-10">
         <button @click="showNewConversationModal" class="text-white px-4 w-full h-12 bg-red-600 rounded-full ripple hover:bg-red-700 active:shadow mouse shadow-lg transition ease-in duration-200 focus:outline-none">
           <svg class="w-6 h-6 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
           <span>New Conversation</span>
         </button>
     </div>
@@ -127,7 +127,7 @@ export default {
         let currentView = ref("All");
         let searchValue = '';
         let searchOpen = ref(false);
-        
+
         /* might not be needed */
         watch(() => props.reload, (newValue, oldValue) => {
             console.log('conversations changed. reload', oldValue, newValue);
@@ -139,6 +139,7 @@ export default {
         
        function loadConversations(){
            console.log(props.reload); //placeholder to avoid error
+           //this.$emit('load-new-conversations');
            //API.loadConversations();
        }
 
