@@ -9,7 +9,10 @@
             <dl class="flex flex-wrap text-sm font-normal whitespace-nowrap w-full">
                 <div class="" style="width: inherit;">
                     <dt class="sr-only">Last Message</dt>
-                    <dd class="overflow-ellipsis truncate"> {{ conversation.last_message }}</dd>
+                    <dd class="overflow-ellipsis truncate"> 
+                        <i v-if="conversation.last_message == '(Attachment Inside)'">(Attachment Inside)</i>
+                        <div v-else class="overflow-ellipsis truncate">{{ conversation.last_message }}</div>
+                        </dd>
                 </div>
                 <div class="absolute top-0 right-0 rounded-full bg-amber-50 text-black px-2 py-0.5 hidden sm:flex lg:hidden xl:flex items-center space-x-1 dark:text-white">
                     <dd class="text-gray-500 dark:text-gray-400">{{ conversation.last_message_sent }}</dd>
