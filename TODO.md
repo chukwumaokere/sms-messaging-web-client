@@ -11,11 +11,12 @@ Modal when a photo is clicked to view photo in full
 on chat window load, we should mark our own conversation as 'read' broadcast axios.post(localhost:13337, {type: 'mark_read', messageid: messageid}) so other people's get marked as read.
 need to add a listneder for type 'mark_read', type: 'reload' make sure php sends type reload
 
-# ISSUE: 
-When sending message with picture it hits 500 error.
-send sms seems to force big reload 
-receive SMS doesnt.
-So SMS shouldnt force big reload with reload screen. it hits load Conversation data and it 500 errors on both fetch_message_history.php and fetch_sidebar_message_history.php
+# ISSUES: 
+~~When sending message with picture it hits 500 error.~~
+~~send sms seems to force big reload~~
+~~receive SMS doesnt.~~
+~~So SMS shouldnt force big reload with reload screen. it hits load Conversation data and it 500 errors on both fetch_message_history.php and fetch_sidebar_message_history.php~~
+Now on reload chatwindow main doesnt show image but shows the message text standalone. gotta double check the response on fetch, and make sure it has the image in it and match sure chatwindow.vue or chatmessage.vue will reload the picture properly
 
 
 # HOW TO SET UP:
