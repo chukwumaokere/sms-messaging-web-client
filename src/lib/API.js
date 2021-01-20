@@ -3,12 +3,15 @@ import swal from 'sweetalert';
 const endpoint_url = "https://devl06.borugroup.com/cokere/";
 import { io } from 'socket.io-client';
 const socket = io('http://localhost:8081', {transports: ['websocket']});
+const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 export default {
     async loadConversationData(phoneNumber, contactName){
+        
         console.log('API: requesting conversations for', phoneNumber);
         return axios.post(endpoint_url + 'twilio/fetch_message_history.php',{
             contact_number: phoneNumber,
+            timezone: timezone,
         }).then(function(response){
             console.log('responose from fetch_message_history.php', response);
             if(response.status == 200 && response.data.success == true && response.data.data.length > 0){
@@ -140,6 +143,7 @@ export default {
         console.log('API: loading sidebar conversations', numbers);
         return axios.post(endpoint_url + 'twilio/fetch_sidebar_message_history.php', {
             numbers: numbers,
+            timezone: timezone,
         }).then(function(response){
             console.log('response from fetch_sidebar_message_history.php:', response);
             if(response.status == 200 && response.data.success == true && response.data.data.length > 0){
