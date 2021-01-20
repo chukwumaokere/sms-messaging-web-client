@@ -228,13 +228,13 @@ export default {
 
     function triggerFullReload(){
         reloadChatWindow.value = true;
-        reloadSidebar.value = true;
+        //reloadSidebar.value = true;
 
         triggerSidebarReload();
 
         setTimeout(() => {
             reloadChatWindow.value = false;
-            reloadSidebar.value = false;
+            //reloadSidebar.value = false;
         }, 250)
     }
 
