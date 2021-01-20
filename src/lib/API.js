@@ -4,6 +4,7 @@ const endpoint_url = "https://devl06.borugroup.com/cokere/";
 import { io } from 'socket.io-client';
 const socket = io('http://localhost:8081', {transports: ['websocket']});
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+const currentTimeUnix = Math.floor(Date.now() / 1000);
 
 export default {
     async loadConversationData(phoneNumber, contactName){
@@ -144,6 +145,7 @@ export default {
         return axios.post(endpoint_url + 'twilio/fetch_sidebar_message_history.php', {
             numbers: numbers,
             timezone: timezone,
+            current_time: currentTimeUnix,
         }).then(function(response){
             console.log('response from fetch_sidebar_message_history.php:', response);
             if(response.status == 200 && response.data.success == true && response.data.data.length > 0){
