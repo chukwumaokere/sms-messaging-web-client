@@ -315,7 +315,7 @@ export default {
             loadConversation(true);
         });
         */
-       
+
         watch(() => props.phoneNumber, (newValue, oldValue) => {
             console.log('value switched to', oldValue, newValue);
             if(props.phoneNumber !== 'No Phone Number'){
@@ -360,7 +360,7 @@ export default {
                     if(res === true){
                         document.getElementById('message-body').value = '';
                         this.uploadedFile = undefined;
-                        this.$emit('message-sent', true)
+                        this.$emit('message-sent')
                     }
                 });
             }else{
