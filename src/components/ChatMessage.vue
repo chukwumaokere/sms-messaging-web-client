@@ -7,12 +7,19 @@
             <img :src="picture ? picture : 'https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png'" alt="My profile" class="w-10 h-10 rounded-full ">
         <div class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl dark:bg-gray-500 dark:text-white">
             <div v-if="message.hasimage && !message.isimage">{{message.message}}
-                    <img :src="message.imgsrc" class="max-w-xs cursor-pointer" />
+                    <img @click="openPhoto(message.imgsrc)" :src="message.imgsrc" class="max-w-xs cursor-pointer" :data-id="message.id" />
             </div>
             <div v-if="message.isimage"><img :src="message.imgsrc" class="max-w-xs cursor-pointer" /></div>
             <div v-if="!message.hasimage && !message.isimage">{{message.message}}</div>
             <div class="absolute text-xs bottom-0 left-0 -mb-5 mr-2 text-gray-500 w-max dark:text-gray-200">
                 {{message.timestamp}}
+            </div>
+            <div v-if="message.hasimage" class="relative -right-full" :data-id="message.id">
+                <div class="absolute left-12 bottom-1/3">
+                    <div class="bg-gray-800 text-white text-xs rounded py-1 px-4 right-0 bottom-full" style="width: max-content;">
+                        Click the photo to open it in a new tab
+                    </div>
+                </div>
             </div>
         </div>
         </div>
@@ -27,7 +34,7 @@
             <img src="https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png" alt="My profile" class="w-10 h-10 rounded-full ">
             <div class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl dark:bg-blue-500 dark:text-white">
                 <div v-if="message.hasimage && !message.isimage">{{message.message}}
-                    <img :src="message.imgsrc" class="max-w-xs cursor-pointer" />
+                    <img @click="openPhoto(message.imgsrc)" :src="message.imgsrc" class="max-w-xs cursor-pointer" :data-id="message.id" />
                 </div>
                 <div v-if="message.isimage"><img :src="message.imgsrc" class="max-w-xs cursor-pointer" /></div>
                 <div v-if="!message.hasimage && !message.isimage">{{message.message}}
@@ -39,6 +46,13 @@
                 </div>
                 <div class="absolute text-xs bottom-0 right-0 -mb-5 mr-2 text-gray-500 w-max dark:text-gray-200">
                     {{message.timestamp}}
+                </div>
+                <div v-if="message.hasimage" class="relative -left-full" :data-id="message.id">
+                    <div class="absolute right-12 bottom-1/3">
+                        <div class="bg-gray-800 text-white text-xs rounded py-1 px-4 right-0 bottom-full" style="width: max-content;">
+                            Click the photo to open it in a new tab
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -52,6 +66,11 @@ export default {
         message: Object,
         picture: String,
         lastMessageWithImageLoading: Boolean,
+    },
+    methods: {
+        openPhoto(src){
+            window.open(src, "_blank");
+        }
     }
 }
 </script>
