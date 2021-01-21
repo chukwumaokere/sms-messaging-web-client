@@ -2,7 +2,7 @@
   <div class="home h-full pl-96">
     <!--<div @click="triggerFullReload"><p>for testing purposes only</p></div> -->
     <Container class="h-full">
-        <ChatWindow :reload="reloadChatWindow" :currentConvo="currentConvo" :contactName="contact_name" :phoneNumber="phone_number" @message-sent="messageSent" />
+        <ChatWindow :reload="reloadChatWindow" :currentConvo="currentConvo" :contactName="contact_name" :phoneNumber="phone_number" @message-sent="messageSent" :lastMessageHadImage="lastMessageHadImage" />
     </Container>
     <Sidebar class="pt-5" :reload="reloadSidebar" :unreadCount="unreadcount" :conversations="conversations" @change-window="changeWindow" @change-conversation-type="changeConversations" @toggle-dark-mode="toggleDarkMode" @filter-list="filterList">
     </Sidebar>
@@ -190,6 +190,7 @@ export default {
     let reloadSidebar = ref(false);
     let reloadChatWindow = ref(false);
     let conversation_list = ref([]);
+    let lastMessageHadImage = ref(false);
     
     currentConvo.value = params.conversationid ? params.conversationid : 0;
     
@@ -226,8 +227,9 @@ export default {
         triggerSidebarReload();
     }
 
-    function triggerFullReload(){
+    function triggerFullReload(lastMessageHadImageV){
         reloadChatWindow.value = true;
+        lastMessageHadImage.value = lastMessageHadImageV;
         //reloadSidebar.value = true;
 
         triggerSidebarReload();
@@ -298,6 +300,7 @@ export default {
         triggerFullReload,
         triggerSidebarReload,
         conversation_list,
+        lastMessageHadImage,
     }
   },
   methods:{ 
@@ -362,8 +365,11 @@ export default {
               //console.log('conversations after search:', this.conversations);
           }
       },
-      messageSent(){
-          this.triggerFullReload();
+      messageSent(lastMessageHadImageEventValue){
+          this.triggerFullReload(lastMessageHadImageEventValue);
+          setTimeout(() => { //added this to update picture after about 15 seconds.
+            this.triggerFullReload(false);
+          }, 15000);
       },
   }
 }

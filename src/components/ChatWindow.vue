@@ -15,7 +15,7 @@
           </div>          
       </div>
       <div v-if="fullConversation.length > 0" id="messages" class="px-10 pt-5 chat-area pb-15 overflow-y-auto max-h-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
-          <ChatMessage v-for="message in fullConversation" :key="message.id" :message="message" :picture="picture" />
+          <ChatMessage v-for="(message, mkey) in fullConversation" :key="message.id" :message="message" :picture="picture" :lastMessageWithImageLoading="mkey == fullConversation.length - 1 && lastMessageHadImage ? true : false" />
       </div>
       
       <div v-else class="m bg-gray-300 dark:bg-gray-600 dark:text-white text-black dark:bg-gray-300 dark:text-black w-full relative" >
@@ -125,6 +125,7 @@ export default {
         contactName: String,
         phoneNumber: String,
         reload: Boolean,
+        lastMessageHadImage: Boolean,
     },
     setup(props){
         let fullConversation = ref([]);
@@ -236,11 +237,14 @@ export default {
         let file_uploading = ref(false);
         let picture = ref('');
 
-        function loadConversation(showLoading){
+        function loadConversation(showLoading, lastMessageHadImageVal){
             if(showLoading){
                 loading.value = true;
             }
             API.loadConversationData(props.phoneNumber, props.contactName).then(res => {
+                if (lastMessageHadImageVal){
+                    console.log('last sent Message did have an image');
+                }
                 if (res && res.success === true){
                     console.log('successfully retrieved result for', props.currentConvo, props.phoneNumber);
                     if(fullConversation.value === res.convo){
@@ -327,7 +331,7 @@ export default {
         watch(() => props.reload, (newValue, oldValue) => {
             console.log('new Chat incoming. reload', oldValue, newValue);
             if(newValue == true){
-                loadConversation(false);
+                loadConversation(false, props.lastMessageHadImage);
             }
         })
         
@@ -357,10 +361,16 @@ export default {
             if(b != '' || a !== undefined){
                 console.log('triggering twilio api', t, b)
                 API.sendSMSMessage(t, b, a).then(res => {
+                    let hadattachment;
+                    if(a !== undefined){
+                        hadattachment = true;
+                    }else{
+                        hadattachment = false;
+                    }
                     if(res === true){
                         document.getElementById('message-body').value = '';
                         this.uploadedFile = undefined;
-                        this.$emit('message-sent')
+                        this.$emit('message-sent', hadattachment);
                     }
                 });
             }else{
