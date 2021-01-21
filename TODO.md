@@ -14,11 +14,11 @@
 * Add function to disable input box or blur it as message is sending, show text "Sending message..." with loading symbol?   
 
 # ISSUES: 
-~~When sending message with picture it hits 500 error.~~
-~~send sms seems to force big reload~~
-~~receive SMS doesnt.~~
-~~So SMS shouldnt force big reload with reload screen. it hits load Conversation data and it 500 errors on both fetch_message_history.php and fetch_sidebar_message_history.php~~
-~~Now on reload chatwindow main doesnt show image but shows the message text standalone. gotta double check the response on fetch, and make sure it has the image in it and match sure chatwindow.vue or chatmessage.vue will reload the picture properly~~
+* ~~When sending message with picture it hits 500 error.~~
+* ~~send sms seems to force big reload~~
+* ~~receive SMS doesnt.~~
+* ~~So SMS shouldnt force big reload with reload screen. it hits load Conversation data and it 500 errors on both fetch_message_history.php and fetch_sidebar_message_history.php~~
+* ~~Now on reload chatwindow main doesnt show image but shows the message text standalone. gotta double check the response on fetch, and make sure it has the image in it and match sure chatwindow.vue or chatmessage.vue will reload the picture properly~~
 
 
 # HOW TO SET UP:
