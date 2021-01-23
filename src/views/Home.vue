@@ -234,6 +234,7 @@ export default {
         messageSending.value = messageSendingV;
         receivingSMS.value = receivingSMSV;
         reloadChatWindow.value = true;
+        console.log('THE THREE VALUES ARE', lastMessageHadImageV, messageSendingV, receivingSMSV)
         //reloadSidebar.value = true;
 
         triggerSidebarReload();

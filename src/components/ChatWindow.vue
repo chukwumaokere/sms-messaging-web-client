@@ -17,7 +17,7 @@
       <div v-if="fullConversation.length > 0" id="messages" class="px-10 pt-5 chat-area pb-15 overflow-y-auto max-h-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
           <ChatMessage v-for="(message, mkey) in fullConversation" :key="message.id" :message="message" :picture="picture" :lastMessageWithImageLoading="mkey == fullConversation.length - 1 && lastMessageHadImage ? true : false" :messageSending="messageSending" />
             <!-- Loading message -->
-            <div :class="{'hidden': messageSending == false && lastMessageHadImage == false && receivingSMS == false}" class="col-start-6 col-end-13 p-3 rounded-lg">
+            <div :class="{'hidden': (messageSending == false && lastMessageHadImage == false) || receivingSMS == true}" class="col-start-6 col-end-13 p-3 rounded-lg">
                 <div class="flex items-center justify-start flex-row-reverse">
                     <img src="https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png" alt="My profile" class="w-10 h-10 rounded-full ">
                     <div class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl dark:bg-blue-500 dark:text-white">
@@ -322,7 +322,7 @@ export default {
 
         onUpdated(() => {
             console.log('updated');
-            
+            console.log('THE THREE VALUES ARE - CHATWINDOW.VUE', props.lastMessageHadImage, props.messageSending, props.receivingSMS);
             try{ 
                 scrollToBottom();
                 var tooltips = document.querySelectorAll('.tooltip div.tt');
