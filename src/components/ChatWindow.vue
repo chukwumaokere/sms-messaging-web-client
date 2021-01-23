@@ -19,7 +19,7 @@
             <!-- Loading message -->
             <div :class="{'hidden': (messageSending == false && lastMessageHadImage == false) || receivingSMS == true}" class="col-start-6 col-end-13 p-3 rounded-lg">
                 <div class="flex items-center justify-start flex-row-reverse">
-                    <img src="https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png" alt="My profile" class="w-10 h-10 rounded-full ">
+                    <img :src="imgpath" alt="My profile" class="w-10 h-10 rounded-full ">
                     <div class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl dark:bg-blue-500 dark:text-white">
                         <div>
                             <p>Sending message...</p>
@@ -130,7 +130,7 @@ import ChatMessage from './ChatMessage';
 import ChatSkeleton from './ChatSkeleton';
 import swal from 'sweetalert';
 import { ref, onUpdated, onMounted, onBeforeUpdate, onBeforeMount, watch } from 'vue';
-
+import imgpath from "@/assets/placeholderimg.png";
 export default {
     name: 'ChatWindow',
     emits: ['message-sent'],
@@ -385,6 +385,7 @@ export default {
             contact_id,
             file_uploading,
             picture,
+            imgpath,
         }
     },
     updated(){

@@ -1,7 +1,7 @@
 <template>
 <a :href="href" @click="changeChat(conversation.conversationid, conversation.contact_name, conversation.phone_number)" >
   <article class="p-4 px-10 flex space-x-4 transition ease-in hover:bg-gray-100 dark:hover:bg-gray-500" :class="{'bg-gray-200 dark:bg-gray-800': isActive }" style="width: inherit;">
-        <img :src="conversation.picture ? conversation.picture : 'https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png'" class="flex-none w-12 h-12 rounded-lg object-cover" width="144" height="144" >
+        <img :src="conversation.picture ? conversation.picture : imgpath" class="flex-none w-12 h-12 rounded-lg object-cover" width="144" height="144" >
         <div class="min-w-0 relative flex-auto sm:pr-10 lg:pr-0 xl:pr-10">
             <h2 class="text-md font-semibold text-black dark:text-white mb-0.5">
                 {{ conversation.contact_name }}
@@ -11,7 +11,7 @@
                     <dt class="sr-only">Last Message</dt>
                     <dd class="overflow-ellipsis truncate"> 
                         <i v-if="conversation.last_message == '(Attachment Inside)'">(Attachment Inside)</i>
-                        <div v-else class="overflow-ellipsis truncate">{{ conversation.last_message }}</div>
+                        <div v-else :class="{'italic': conversation.last_message == 'No messages for this contact yet'}" class="overflow-ellipsis truncate">{{ conversation.last_message }}</div>
                         </dd>
                 </div>
                 <div class="absolute top-0 right-0 rounded-full bg-amber-50 text-black px-2 py-0.5 hidden sm:flex lg:hidden xl:flex items-center space-x-1 dark:text-white">
@@ -30,6 +30,7 @@
 <script>
 import Router from '@/router';
 import { ref } from 'vue';
+import imgpath from "@/assets/placeholderimg.png";
 export default {
     props: {
         conversation: Object,
@@ -39,11 +40,13 @@ export default {
     setup(props){
         let isActive = ref(false);
         let params = Router.currentRoute.value.params;
+        
         if (params.conversationid == props.conversation.conversationid){
             isActive.value = true;
         }
         return {
-            isActive
+            isActive,
+            imgpath,
         }
     },
     methods: {

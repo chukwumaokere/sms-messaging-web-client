@@ -9,10 +9,10 @@
 * ~~Figure out how to save the numbers that were contacted: I think we should save them in localStorage Just as an array/list of numbers. Then on load, we will fetch the conversations for each one API.~~  
 * ~~loadConversations for each number to create a convo tile in sidebar. So each persons screen is different~~  
 * on chat window load, we should mark our own conversation as 'read' broadcast axios.post(localhost:13337, {type: 'mark_read', messageid: messageid}) so other people's get marked as read.  
-* need to add a listneder for type 'mark_read', type: 'reload' make sure php sends type reload  
-* switch placeholder images to load locally from vue project.  
-* Add function to disable input box or blur it as message is sending, show text "Sending message..." with loading symbol?   
-* Hover tooltip to open window in new tab?
+* need to add a listneder for type 'mark_read', type: 'reload' make sure php sends type reload   
+* ~~switch placeholder images to load locally from vue project.~~  
+* ~~Add function to disable input box or blur it as message is sending, show text "Sending message..." with loading symbol?~~   
+* ~~Hover tooltip to open window in new tab?~~   
 
 # ISSUES: 
 * ~~When sending message with picture it hits 500 error.~~
