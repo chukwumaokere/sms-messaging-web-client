@@ -2,7 +2,7 @@
   <div class="home h-full pl-96">
     <!--<div @click="triggerFullReload"><p>for testing purposes only</p></div> -->
     <Container class="h-full">
-        <ChatWindow :reload="reloadChatWindow" :currentConvo="currentConvo" :contactName="contact_name" :phoneNumber="phone_number" @message-sent="messageSent" :lastMessageHadImage="lastMessageHadImage" />
+        <ChatWindow :reload="reloadChatWindow" :currentConvo="currentConvo" :contactName="contact_name" :phoneNumber="phone_number" @message-sent="messageSent" :lastMessageHadImage="lastMessageHadImage" :messageSending="messageSending" :receivingSMS="receivingSMS" />
     </Container>
     <Sidebar class="pt-5" :reload="reloadSidebar" :unreadCount="unreadcount" :conversations="conversations" @change-window="changeWindow" @change-conversation-type="changeConversations" @toggle-dark-mode="toggleDarkMode" @filter-list="filterList">
     </Sidebar>
@@ -191,6 +191,8 @@ export default {
     let reloadChatWindow = ref(false);
     let conversation_list = ref([]);
     let lastMessageHadImage = ref(false);
+    let messageSending = ref(false);
+    let receivingSMS = ref(false);
     
     currentConvo.value = params.conversationid ? params.conversationid : 0;
     
@@ -214,7 +216,7 @@ export default {
                 let receivedPhoneNumber = "+" + incoming_update['phoneNumber'];
                 //console.log('comparing values', phone_number.value, receivedPhoneNumber, receivedPhoneNumber == phone_number.value);
                 if(incoming_update['type'] == 'incoming_sms' && incoming_update['update'] == true && phone_number.value == receivedPhoneNumber){
-                    triggerFullReload();
+                    triggerFullReload(false,false,true);
                 }
                 if(incoming_update['type'] == 'incoming_sms' && incoming_update['update'] == true){
                     triggerSidebarReload();
@@ -227,15 +229,18 @@ export default {
         triggerSidebarReload();
     }
 
-    function triggerFullReload(lastMessageHadImageV){
-        reloadChatWindow.value = true;
+    function triggerFullReload(lastMessageHadImageV, messageSendingV, receivingSMSV){
         lastMessageHadImage.value = lastMessageHadImageV;
+        messageSending.value = messageSendingV;
+        receivingSMS.value = receivingSMSV;
+        reloadChatWindow.value = true;
         //reloadSidebar.value = true;
 
         triggerSidebarReload();
 
         setTimeout(() => {
             reloadChatWindow.value = false;
+            //messageSending.value = false;
             //reloadSidebar.value = false;
         }, 250)
     }
@@ -272,21 +277,6 @@ export default {
             console.log('There are no saved conversaitons')
         }
     }
-    
-    /* This goes above */
-    /*
-    if (currentConvo.value !== 0 ){
-        let obj = conversations.value.find(conv => conv.conversationid == currentConvo );
-        //console.log(obj);
-        contact_name.value = obj.contact_name;
-        phone_number.value = obj.phone_number;
-    } 
-    conversations.value.forEach(conversation => {
-        if(conversation.unread === true){
-            unreadcount.value++;
-        }
-    })
-    */
 
     return{
         conversations,
@@ -301,6 +291,8 @@ export default {
         triggerSidebarReload,
         conversation_list,
         lastMessageHadImage,
+        messageSending,
+        receivingSMS,
     }
   },
   methods:{ 
@@ -366,9 +358,13 @@ export default {
           }
       },
       messageSent(lastMessageHadImageEventValue){
-          this.triggerFullReload(lastMessageHadImageEventValue);
+          this.triggerFullReload(lastMessageHadImageEventValue, true, false);
+
+          setTimeout(() => { //might not be needed in the end
+              this.triggerFullReload(false, false, false)
+          }, 5000 ); // this value is subject to change 
           setTimeout(() => { //added this to update picture after about 15 seconds.
-            this.triggerFullReload(false);
+            this.triggerFullReload(false, false, false);
           }, 15000);
       },
   }

@@ -15,7 +15,26 @@
           </div>          
       </div>
       <div v-if="fullConversation.length > 0" id="messages" class="px-10 pt-5 chat-area pb-15 overflow-y-auto max-h-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
-          <ChatMessage v-for="(message, mkey) in fullConversation" :key="message.id" :message="message" :picture="picture" :lastMessageWithImageLoading="mkey == fullConversation.length - 1 && lastMessageHadImage ? true : false" />
+          <ChatMessage v-for="(message, mkey) in fullConversation" :key="message.id" :message="message" :picture="picture" :lastMessageWithImageLoading="mkey == fullConversation.length - 1 && lastMessageHadImage ? true : false" :messageSending="messageSending" />
+            <!-- Loading message -->
+            <div :class="{'hidden': messageSending == false && lastMessageHadImage == false && receivingSMS == false}" class="col-start-6 col-end-13 p-3 rounded-lg">
+                <div class="flex items-center justify-start flex-row-reverse">
+                    <img src="https://www.pngitem.com/pimgs/m/421-4212617_person-placeholder-image-transparent-hd-png-download.png" alt="My profile" class="w-10 h-10 rounded-full ">
+                    <div class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl dark:bg-blue-500 dark:text-white">
+                        <div>
+                            <p>Sending message...</p>
+                            <svg v-if="lastMessageHadImage" class="animate-spin h-full w-10 text-black dark:text-white " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            <div class="absolute text-xs bottom-0 right-0 -mb-5 mr-2 text-gray-500 w-max dark:text-gray-200">
+                                <!--{{new Date(Date.now()).toDateString()}}--> Sending...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
       </div>
       
       <div v-else class="m bg-gray-300 dark:bg-gray-600 dark:text-white text-black dark:bg-gray-300 dark:text-black w-full relative" >
@@ -126,6 +145,8 @@ export default {
         phoneNumber: String,
         reload: Boolean,
         lastMessageHadImage: Boolean,
+        messageSending: Boolean,
+        receivingSMS: Boolean,
     },
     setup(props){
         let fullConversation = ref([]);
@@ -301,8 +322,27 @@ export default {
 
         onUpdated(() => {
             console.log('updated');
+            
             try{ 
                 scrollToBottom();
+                var tooltips = document.querySelectorAll('.tooltip div.tt');
+                var tooltipsL = document.querySelectorAll('.tooltipL div.tt');
+                //console.log(tooltips);
+                //console.log(tooltipsL);
+                window.onmousemove = function (e) {
+                    var x = (e.clientX - 240) + 'px',
+                        y = (e.clientY + 25) + 'px',
+                        xL = (e.clientX + 20) + 'px',
+                        yL = (e.clientY + 25) + 'px';
+                    for (var i = 0; i < tooltips.length; i++) {
+                        tooltips[i].style.top = y;
+                        tooltips[i].style.left = x;
+                    }
+                    for (var k = 0; k < tooltipsL.length; k++) {
+                        tooltipsL[k].style.top = yL;
+                        tooltipsL[k].style.left = xL;
+                    }
+                };
             }catch(err){
                 //console.log(err);
                 return err;

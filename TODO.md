@@ -25,6 +25,7 @@
 # HOW TO SET UP:
 pre) npm install to install all. Make sure axios, socket.io, socket.io-client, and express get installed.
 1) Create production Twilio account and get auth info and api info
+1.5) install composer in twilio/ directory and run `composer require twilio/sdk; composer install`
 2) Update API endpoint URLs in post/ and twilio/
 3) Update URL apache configs
 4) Update API.js urls "endpoint_url" and "socket".
