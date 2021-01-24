@@ -66,7 +66,7 @@
     <div class="flex options w-full mx-auto px-10 absolute bottom-0 pb-5 p-5" id="options">
         <ul class="flex space-x-4 mx-auto">
             <li>
-                <button @click="toggleDarkMode" class="flex items-center focus:outline-none justify-center text-gray-400 hover:text-gray-700 dark:hover:text-indigo-100 dark:text-indigo-500 h-10 w-10 transition ease-in rounded hover:bg-white hover:bg-opacity-10">
+                <button @click="toggleDarkMode" class="flex items-center focus:outline-none justify-center dark:hover:bg-opacity-10 text-gray-400 hover:text-gray-700 dark:hover:text-indigo-100 dark:text-indigo-500 h-10 w-10 transition ease-in rounded hover:bg-black hover:bg-opacity-10 dark:hover:bg-white:bg-opacity-10 ">
                 <svg class="w-6 h-6"
                     fill="none"
                     stroke="currentColor"
@@ -81,8 +81,8 @@
             </li>
             <li>
                 <button 
-                    class="flex items-center focus:outline-none rounded hover:bg-white hover:bg-opacity-10 ">
-                    <span class="flex items-center focus:outline-none justify-center text-gray-400 hover:text-gray-700 dark:hover:text-indigo-100 dark:text-indigo-500 h-10 w-10 rounded-2xl transition ease-in ">
+                    class="flex items-center focus:outline-none rounded dark:hover:bg-white:bg-opacity-10 hover:bg-black hover:bg-opacity-10 ">
+                    <span class="flex items-center focus:outline-none justify-center  dark:hover:bg-opacity-10 text-gray-400 hover:text-gray-700 dark:hover:text-indigo-100 dark:text-indigo-500 h-10 w-10 rounded-2xl transition ease-in  ">
                         <svg class="w-6 h-6"
                             fill="none"
                             stroke="currentColor"

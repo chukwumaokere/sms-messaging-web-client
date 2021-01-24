@@ -164,5 +164,35 @@ export default {
             console.log(err);
             swal('Error', `Something went wrong! Please try again\n${err}`, 'error')
         })
-    }
+    },
+    composeEmail(email_address, name){
+        swal({
+            title: "Success",
+            icon: 'success',
+            text: `Would you like to start send an email to ${name} at ${email_address}?`,
+            buttons: true,
+        }).then((isConfirm) => {
+            if(isConfirm){
+                //Need some api to start a new conversation tile.
+                swal('Conversation initiated',`Starting email conversation with ${name} at ${email_address}!`, 'warning', {timer: 1300});
+            }else{
+                swal('Conversation cancelled', `Just click the button again if you want to start an email conversation!`, 'info');
+            }
+        })
+    },
+    initiateCall(phoneNumber, name){
+        swal({
+            title: "Success",
+            icon: 'success',
+            text: `Would you like to start a phone call with ${name} (${phoneNumber})?`,
+            buttons: true,
+        }).then((isConfirm) => {
+            if(isConfirm){
+                //Need some api to start a new conversation tile.
+                swal('Conversation initiated',`Starting phone call with ${name} (${phoneNumber})!`, 'warning', {timer: 1300});
+            }else{
+                swal('Conversation cancelled', `Just click the button again if you want to start a phone call with ${name}!`, 'info');
+            }
+        })
+    },
 }
