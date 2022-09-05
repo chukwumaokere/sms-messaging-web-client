@@ -29,8 +29,10 @@ export default {
   }, 
   setup(){
     let conversations = ref([]);
-    /*DEMO DATA
-    {
+    //DEMO DATA
+    
+    /* let conversations = [
+        {
             conversationid: 1,
             last_message_sent: "2 min",
             last_message: "Thank you! 🙏 I really appreciate it a lot!",
@@ -179,8 +181,9 @@ export default {
             contact_name: "David O'Doherty",
             phone_number: '+12345678901',
             picture: "",
-        },
-        */
+        }
+  ]; */
+        
     let initConversations = ref([]);
     let unreadcount = ref(0);
     let currentConvo = ref(0);
@@ -194,7 +197,7 @@ export default {
     let messageSending = ref(false);
     let receivingSMS = ref(false);
     
-    currentConvo.value = params.conversationid ? params.conversationid : 0;
+    currentConvo.value = params.conversationid ?? 0;
     
     // On page load or when changing themes, best to add inline in `head` to avoid FOUC
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {

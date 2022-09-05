@@ -1,6 +1,6 @@
 const axios = require('axios');
 import swal from 'sweetalert';
-const endpoint_url = "https://devl06.borugroup.com/cokere/";
+const endpoint_url = "https://vtiger.chukwumaokere.com/";
 import { io } from 'socket.io-client';
 const socket = io('http://localhost:8081', {transports: ['websocket']});
 const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -118,7 +118,7 @@ export default {
                             }
                             //console.log('Debug: ', JSON.parse(localStorage['conversation_list']));
                         }else{
-                            let start_new_list = new Array();
+                            let start_new_list = [];
                             start_new_list[0] = {contact_number: record.mobile};
                             localStorage.setItem('conversation_list', JSON.stringify(start_new_list));
                         }
